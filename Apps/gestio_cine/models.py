@@ -34,7 +34,8 @@ class Pelicula (models.Model):
     duracio = models.CharField(max_length=5, null=False)
     director = models.CharField(max_length=30, null=False)
     actors = models.CharField(max_length=100, null=False)
-    puntuacio = models.CharField(max_length=5, null=False)
+    puntuacio = models.FloatField(null=False)
+    qualificacio = models.CharField(max_length=5, null=False)
     imatge = models.CharField(max_length=50, null=False)
 
 
