@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Apps.gestio_cine.views import homeView, registerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', homeView),
+    path('registrar/', registerView)
 ]
