@@ -15,12 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from Apps.gestio_cine.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homeView),
-    path('registrar/', registerView),
-    path('login/', loginView),
-    path('cartellera/', allMovies)
+    path('registrar/', registerView, name='registrar'),
+    path('login/', loginView, name='login'),
+    path('cartellera/', allMovies, name='cartellera'),
+    path('llistat_pelicules/', allMoviesAdmin, name='llistat_pelicules'),
+    path('afegir_pelicula/', addMovie, name='afegir_pelicula'),
+    path('editar_pelicula/<id>', editMovie, name='editar_pelicula'),
+    path('eliminar_pelicula/<id>/', deleteMovie, name='eliminar_pelicula'),
+    path('productes/', allProductes, name='productes'),
+    path('llistat_productes/', allProductesAdmin, name='llistat_productes'),
+    path('afegir_producte/', addProducte, name='afegir_producte'),
+    path('editar_producte/<id>/', editProducte, name='editar_producte'),
+    path('eliminar_producte/<id>/', deleteProducte, name='eliminar_producte')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

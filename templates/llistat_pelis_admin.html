@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{% static 'js/confirm.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="global-container">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Títol</th>
+                    <th>Gèneres</th>
+                    <th>Director</th>
+                    <th>Qualificació</th>
+                    <th>Opcions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for peli in pelicules %}
+                <tr>
+                    <td>{{ peli.titol }}</td>
+                    <td>{{ peli.generes }}</td>
+                    <td>{{ peli.director }}</td>
+                    <td>{{ peli.qualificacio }}</td>
+                    <td>
+                        <a href="{% url 'editar_pelicula' peli.id_pelicula %}">Modificar</a>
+                        <a href="#" onclick="confirmarDelete({{ peli.id_pelicula }})">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
