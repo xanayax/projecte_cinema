@@ -24,6 +24,7 @@ urlpatterns = [
     path('', homeView),
     path('registrar/', registerView, name='registrar'),
     path('login/', loginView, name='login'),
+    path('logout/', logOutView, name='logout'),
     path('cartellera/', allMovies, name='cartellera'),
     path('llistat_pelicules/', allMoviesAdmin, name='llistat_pelicules'),
     path('afegir_pelicula/', addMovie, name='afegir_pelicula'),
