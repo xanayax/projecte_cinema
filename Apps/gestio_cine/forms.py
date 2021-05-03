@@ -1,13 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Client, Pelicula, Producte
-
-# creem la classe que tindrà els camps del formulari
-# class SignUpForm(forms.ModelForm):
-#     class Meta:
-#         model = Client
-#         fields = '__all__'
+from .models import Pelicula, Producte, Sessio
 
 class SignUpForm(UserCreationForm):
 
@@ -25,4 +19,10 @@ class MovieForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Producte
+        fields = '__all__'
+
+
+class SessionForm(forms.ModelForm):
+    class Meta:
+        model = Sessio
         fields = '__all__'

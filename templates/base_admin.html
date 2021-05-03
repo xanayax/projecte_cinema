@@ -8,21 +8,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pàgina principal</title>
+
     {% block link_css %}
 
     {% endblock %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     {% block js %}
 
     {% endblock %}
+
 </head>
 
 <body>
 
 {% block nav %}
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <a href="/llistat_pelicules"><i class="material-icons">theaters</i><span
+                class="icon-text">Gestionar pel·lícula</span></a><br>
+        <a href="/llistat_productes"><i class="material-icons">fastfood</i><span
+                class="icon-text">Gestionar productes</span></a><br>
+        <a href="#"><i class="material-icons">email</i><span
+                class="icon-text">ac</span></a>
+    </div>
+
+    <div id="main">
+
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navbar-rounded shadow-sm"
          style="z-index: 100;">
 
@@ -46,28 +56,28 @@
                     </li>
                 {% endif %}
             </ul>
-{#          Si l'usuari no ha iniciat sessió, mostrem els enllaços per crear el compte o iniciar sessió #}
+            {#          Si l'usuari no ha iniciat sessió, mostrem els enllaços per crear el compte o iniciar sessió #}
             {% if not request.user.is_authenticated %}
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Iniciar sessió</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registrar">Crear un compte</a>
-                </li>
-            </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Iniciar sessió</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registrar">Crear un compte</a>
+                    </li>
+                </ul>
             {% endif %}
         </div>
-{#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió#}
+        {#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió#}
         {% if request.user.is_authenticated %}
-        <span class="nav-link">Hola, {{ request.user }}</span>
-        <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
+            <span class="nav-link">Hola, {{ request.user }}</span>
+            <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
         {% endif %}
     </nav>
-{% endblock %}
 
-<!-- el que posem aquí es reemplaçarà -->
-{% block content %}
+    {% block content %}
+
+    {% endblock %}
 
 {% endblock %}
 
@@ -80,6 +90,6 @@
         <li><a href="registrar.html">Crear compte</a></li>
     </div>
 </footer>
+</div>
 </body>
-
 </html>

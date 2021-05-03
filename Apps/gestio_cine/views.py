@@ -121,7 +121,7 @@ def addMovie(request):
             form.save()
 
             messages.success(request, "La pel·lícula s'ha afegit correctament")
-            return redirect("/afegir_pelicula")
+            return redirect("/llistat_pelicules")
 
     context = {
         'form': MovieForm()
