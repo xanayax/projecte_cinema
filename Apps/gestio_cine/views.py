@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, MovieForm, ProductForm
+from .forms import SignUpForm, MovieForm, ProductForm, SessionForm
+from .models import Pelicula
 
 # Create your views here.
 
@@ -109,9 +110,7 @@ def allMoviesAdmin(request):
     return render(request, "llistat_pelis_admin.html", context)
 
 
-
 @superuser_only
-
 # Funció per afegir una pel·lícula
 def addMovie(request):
 
@@ -121,7 +120,10 @@ def addMovie(request):
             form.save()
 
             messages.success(request, "La pel·lícula s'ha afegit correctament")
-            return redirect("/llistat_pelicules")
+
+        else:
+            messages.error(request, "S'ha produit un error")
+            print(form.errors)
 
     context = {
         'form': MovieForm()
@@ -142,12 +144,16 @@ def editMovie(request, id):
     }
 
     if request.method == 'POST':
-        form = MovieForm(data=request.POST, instance=pelicula)
+        form = MovieForm(request.POST, request.FILES, instance=pelicula)
 
         if form.is_valid():
             form.save()
             context['form'] = form
             messages.success(request, "La pel·lícula s'ha modificat correctament")
+
+        else:
+            messages.error(request, "S'ha produit un error")
+            print(form.errors)
 
     return render(request, "editar_pelicula.html", context)
 
@@ -161,6 +167,24 @@ def deleteMovie(request, id):
     return redirect(to="llistat_pelicules")
 
 
+
+def movieDetails(request, id):
+
+    pelicula = Pelicula.objects.get(id_pelicula=id)
+    sessio = Sessio.objects.all()
+
+    # L' String és el nom de la variable que haig d'usar a la template
+    context = {
+        'pelicula': pelicula,
+        'sessio': sessio
+    }
+
+    return render(request, "info_pelicula.html", context)
+
+
+##
+# Funcions per productes
+##
 
 def allProductes(request):
 
@@ -196,7 +220,6 @@ def addProducte(request):
             form.save()
 
             messages.success(request, "El producte s'ha afegit correctament")
-            return redirect("/afegir_producte")
 
     context = {
         'form': ProductForm()
@@ -216,12 +239,12 @@ def editProducte(request, id):
     }
 
     if request.method == 'POST':
-        form = ProductForm(data=request.POST, instance=producte)
+        form = ProductForm(request.POST, request.FILES, instance=producte)
 
         if form.is_valid():
             form.save()
             context['form'] = form
-            messages.success(request, "La pel·lícula s'ha modificat correctament")
+            messages.success(request, "El producte s'ha modificat correctament")
 
     return render(request, "editar_producte.html", context)
 
@@ -233,3 +256,78 @@ def deleteProducte(request, id):
     producte.delete()
 
     return redirect(to="llistat_productes")
+
+
+
+
+
+##
+# Funcions sessions
+##
+
+# cridem al decorador per restringir la pàgina si no ets admin
+@superuser_only
+# Funció per mostrar el llistat de les sessions de les pel·lícules a la pàgina de l'admin perquè les pugui gestionar
+def allSessionsAdmin(request):
+
+    sessions = Sessio.objects.all()
+
+    # L' String és el nom de la variable que haig d'usar a la template
+    context = {
+        'sessions': sessions
+    }
+
+    return render(request, "llistat_sessions_admin.html", context)
+
+
+
+@superuser_only
+# Funció per afegir una sessió
+def addSessio(request):
+
+    if request.method == 'POST':
+        form = SessionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, "La sessió s'ha afegit correctament")
+            return redirect("/llistat_sessions")
+
+    context = {
+        'form': SessionForm()
+    }
+
+    return render(request, "afegir_sessio.html", context)
+
+
+
+@superuser_only
+# Funció per afegir una sessió
+def editSessio(request, id):
+
+    sessio = Sessio.objects.get(id_sessio=id)
+
+    # L' String és el nom de la variable que haig d'usar a la template
+    context = {
+        'form': SessionForm(instance=sessio)
+    }
+
+    if request.method == 'POST':
+        form = SessionForm(data=request.POST, instance=sessio)
+
+        if form.is_valid():
+            form.save()
+            context['form'] = form
+            messages.success(request, "La sessio s'ha modificat correctament")
+
+    return render(request, "editar_sessio.html", context)
+
+
+@superuser_only
+# Funció per esborrar una sessió
+def deleteSessio(request, id):
+
+    sessio = Sessio.objects.get(id_pelicula=id)
+    sessio.delete()
+
+    return redirect(to="llistat_sessions")

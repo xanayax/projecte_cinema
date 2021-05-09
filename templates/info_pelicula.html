@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="center">{{ pelicula.titol }}</h2>
+
+{#    fem un for per mostrar les pel·lícules que hi ha a la base de dades#}
+    <div class="container peli-container">
+        <div class="row">
+            <div class="col-md-3">
+                <img class="img-peli" src="{{ pelicula.imatge.url }}">
+            </div>
+            <div class="col-md-9">
+                <div class="text">
+                    <h4>Sinopsis</h4><br>
+                    <p>{{ pelicula.sinopsis }}</p>
+
+                    <div class="horari">
+                        <h5>Horaris</h5>
+                        <a href="../butaques.html" class="btn btn-danger" role="button">{{ sessio.hora }}</a>
+                        <a href="../butaques.html" class="btn btn-danger" role="button">{{ sessio.hora }}</a>
+                    </div>
+
+                    <p><b>Duració: </b>{{ pelicula.duracio }}</p>
+                    <p><b>Director: </b>{{ pelicula.director }}</p>
+                    <p><b>Qualificació: </b>{{ pelicula.qualificacio }}</p>
+                    <p><b>Gènere: </b>{{ pelicula.generes }}</p>
+                    <p><b>Actors: </b>{{ pelicula.actors }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

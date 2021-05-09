@@ -27,8 +27,8 @@
                 class="icon-text">Gestionar pel·lícula</span></a><br>
         <a href="/llistat_productes"><i class="material-icons">fastfood</i><span
                 class="icon-text">Gestionar productes</span></a><br>
-        <a href="#"><i class="material-icons">email</i><span
-                class="icon-text">ac</span></a>
+        <a href="/llistat_sessions"><i class="material-icons">movie</i><span
+                class="icon-text">Gestionar sessions</span></a>
     </div>
 
     <div id="main">
@@ -73,7 +73,7 @@
             <span class="nav-link">Hola, {{ request.user }}</span>
             <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
         {% endif %}
-    </nav>
+    </nav> <br>
 
     {% block content %}
 

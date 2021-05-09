@@ -37,7 +37,7 @@ class Client(models.Model):
         db_table = "gestio_cine_client"
 
 
-class Pelicula (models.Model):
+class Pelicula(models.Model):
 
     genere = (
         ('Acció', 'Acció'),
@@ -50,7 +50,7 @@ class Pelicula (models.Model):
     )
 
     id_pelicula = models.AutoField(primary_key=True)
-    titol = models.CharField(max_length=30, null=False)
+    titol = models.CharField(max_length=80, null=False)
     sinopsis = models.TextField(null=False)
     generes = models.CharField(max_length=30, null=False, choices=genere)
     duracio = models.CharField(max_length=5, null=False)
@@ -68,10 +68,11 @@ class Sala(models.Model):
 
     id_sala = models.AutoField(primary_key=True)
     num_sala = models.IntegerField(null=False)
-    detalls = models.CharField(max_length=40)
+    detalls = models.CharField(max_length=40, null=True)
+    id_pelicula = models.ForeignKey(Pelicula, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.num_sala
+        return str(self.num_sala)
 
 
 class Sessio(models.Model):
@@ -83,18 +84,17 @@ class Sessio(models.Model):
     id_sala = models.ForeignKey(Sala, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id_sessio
+        return str(self.id_sessio)
 
 
 class Reserva(models.Model):
 
     id_reserva = models.AutoField(primary_key=True)
-    data = models.DateField(null=False)
     id_client = models.ForeignKey(Client, null=False, blank=False, on_delete=models.CASCADE)
     id_sessio = models.ForeignKey(Sessio, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.id_reserva
+        return str(self.id_reserva)
 
 
 class Fila(models.Model):
@@ -103,8 +103,8 @@ class Fila(models.Model):
     num_fila = models.IntegerField(null=False)
     id_sala = models.ForeignKey(Sala, null=False, blank=False, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.num_fila
+    def __int__(self):
+        return str(self.num_fila)
 
 
 class Butaca(models.Model):
@@ -113,5 +113,5 @@ class Butaca(models.Model):
     num_butaca = models.IntegerField(null=False)
     id_sala = models.ForeignKey(Fila, null=False, blank=False, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.num_butaca
+    def __int__(self):
+        return str(self.num_butaca)

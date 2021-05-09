@@ -18,7 +18,18 @@
                 <div class="card-text">
                     <form method="POST" action="" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="form-group">
+                            <label for="nom">Nom</label>
+                            {{ form.nom }}
+                        </div>
+                        <div class="form-group">
+                            <label for="preu">Preu</label>
+                            {{ form.preu }}
+                        </div>
+                        <div class="form-group">
+                            <label for="imatge">Imatge</label>
+                            {{ form.imatge }}
+                        </div>
                         <button type="submit" class="btn btn-primary btn-block">Enviar</button>
                     </form>
                 </div>

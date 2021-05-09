@@ -30,11 +30,16 @@ urlpatterns = [
     path('afegir_pelicula/', addMovie, name='afegir_pelicula'),
     path('editar_pelicula/<id>', editMovie, name='editar_pelicula'),
     path('eliminar_pelicula/<id>/', deleteMovie, name='eliminar_pelicula'),
+    path('info_pelicula/<id>/', movieDetails, name='info_pelicula'),
     path('productes/', allProductes, name='productes'),
     path('llistat_productes/', allProductesAdmin, name='llistat_productes'),
     path('afegir_producte/', addProducte, name='afegir_producte'),
     path('editar_producte/<id>/', editProducte, name='editar_producte'),
-    path('eliminar_producte/<id>/', deleteProducte, name='eliminar_producte')
+    path('eliminar_producte/<id>/', deleteProducte, name='eliminar_producte'),
+    path('llistat_sessions/', allSessionsAdmin, name='llistat_sessions'),
+    path('afegir_sessio/', addSessio, name='afegir_sessio'),
+    path('editar_sessio/<id>/', editSessio, name='editar_sessio'),
+    path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

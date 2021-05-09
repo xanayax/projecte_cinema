@@ -1,0 +1,47 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/sidebar_admin.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+{% endblock %}
+
+{% block js %}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="{% static 'js/confirm.js' %}"></script>
+    <script src="{% static 'js/sidebar_admin.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Pel·lícula</th>
+                <th>Sala</th>
+                <th>Opcions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sessio in sessions %}
+                <tr>
+                    <td>{{ sessio.data }}</td>
+                    <td>{{ sessio.hora }}</td>
+                    <td>{{ sessio.id_pelicula }}</td>
+                    <td>{{ sessio.id_sala }}</td>
+                    <td>
+                        <a href="{% url 'afegir_sessio' %}"><i class="material-icons">add_circle_outline</i></a>
+                        <a href="{% url 'editar_sessio' sessio.id_sessio %}"><i class="material-icons">edit</i></a>
+                        <a href="#" onclick="confirmarDeleteSessio({{ sessio.id_sessio }})"><i class="material-icons">delete</i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
