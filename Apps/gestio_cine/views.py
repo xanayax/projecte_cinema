@@ -4,7 +4,7 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm, MovieForm, ProductForm, SessionForm
-from .models import Pelicula
+from .models import *
 
 # Create your views here.
 
@@ -86,13 +86,25 @@ def logOutView(request):
 def allMovies(request):
 
     pelicules = Pelicula.objects.all()
+    generes = Generes.objects.all()
 
     # L' String és el nom de la variable que haig d'usar a la template
     context = {
-        'pelicules': pelicules
+        'pelicules': pelicules,
+        'generes': generes
     }
 
     return render(request, "cartellera.html", context)
+
+
+def allMoviesById(id_genere):
+
+    if id_genere:
+        print(id_genere)
+        return Pelicula.objects.filter(genere=id_genere)
+
+    else:
+        Pelicula.objects.all()
 
 
 # cridem al decorador per restringir la pàgina si no ets admin
@@ -171,15 +183,31 @@ def deleteMovie(request, id):
 def movieDetails(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
-    sessio = Sessio.objects.all()
+
+    sessio = Sessio.objects.raw("SELECT s.*"
+                                " FROM gestio_cine_sessio s"
+                                " INNER JOIN gestio_cine_pelicula p ON s.id_pelicula_id = p.id_pelicula"
+                                " WHERE p.id_pelicula = " + id)
 
     # L' String és el nom de la variable que haig d'usar a la template
     context = {
         'pelicula': pelicula,
-        'sessio': sessio
+        'sessio': sessio,
     }
 
     return render(request, "info_pelicula.html", context)
+
+
+
+def seleccioButaca(request, id):
+
+    sessio = Sessio.objects.get(id_sessio=id)
+
+    context = {
+        'sessio': sessio,
+    }
+
+    return render(request, "seleccio_butaques.html", context)
 
 
 ##

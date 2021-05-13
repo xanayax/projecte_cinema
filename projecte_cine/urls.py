@@ -39,7 +39,8 @@ urlpatterns = [
     path('llistat_sessions/', allSessionsAdmin, name='llistat_sessions'),
     path('afegir_sessio/', addSessio, name='afegir_sessio'),
     path('editar_sessio/<id>/', editSessio, name='editar_sessio'),
-    path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio')
+    path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio'),
+    path('seleccio_butaques/<id>/', seleccioButaca, name='seleccio_butaques')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

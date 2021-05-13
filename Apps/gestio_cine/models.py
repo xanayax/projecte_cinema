@@ -37,28 +37,29 @@ class Client(models.Model):
         db_table = "gestio_cine_client"
 
 
-class Pelicula(models.Model):
 
-    genere = (
-        ('Acció', 'Acció'),
-        ('Animació', 'Animació'),
-        ('Terror', 'Terror'),
-        ('Suspens', 'Suspens'),
-        ('Aventura', 'Aventura'),
-        ('Comèdia', 'Comèdia'),
-        ('Romance', 'Romance'),
-    )
+class Generes(models.Model):
+
+    id_genere = models.AutoField(primary_key=True)
+    nom = models.CharField(max_length=50, null=False)
+
+    def __str__(self):
+        return self.nom
+
+
+
+class Pelicula(models.Model):
 
     id_pelicula = models.AutoField(primary_key=True)
     titol = models.CharField(max_length=80, null=False)
     sinopsis = models.TextField(null=False)
-    generes = models.CharField(max_length=30, null=False, choices=genere)
     duracio = models.CharField(max_length=5, null=False)
     director = models.CharField(max_length=30, null=False)
     actors = models.CharField(max_length=100, null=False)
     puntuacio = models.FloatField(null=False)
     qualificacio = models.CharField(max_length=5, null=False)
     imatge = models.ImageField(null=True)
+    id_genere = models.ForeignKey(Generes, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.titol
@@ -111,7 +112,7 @@ class Butaca(models.Model):
 
     id_butaca = models.AutoField(primary_key=True)
     num_butaca = models.IntegerField(null=False)
-    id_sala = models.ForeignKey(Fila, null=False, blank=False, on_delete=models.CASCADE)
+    id_fila = models.ForeignKey(Fila, null=False, blank=False, on_delete=models.CASCADE)
 
     def __int__(self):
         return str(self.num_butaca)

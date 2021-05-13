@@ -24,6 +24,7 @@ class MovieForm(forms.ModelForm):
             'duracio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'puntuacio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'qualificacio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'id_genere': forms.Select(attrs={'class': 'form-control form-control-sm'}),
         }
 
 
@@ -44,8 +45,10 @@ class SessionForm(forms.ModelForm):
         fields = '__all__'
 
 
-    widgets = {
-        'id_pelicula': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-        'id_sala': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-    }
+        widgets = {
+            'id_pelicula': forms.Select(attrs={'class': 'form-control form-control-sm'}),
+            'data': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'hora': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'id_sala': forms.Select(attrs={'class': 'form-control form-control-sm'}),
+        }
 

@@ -11,9 +11,17 @@
 
 {#    fem un for per mostrar les pel·lícules que hi ha a la base de dades#}
     <div class="container">
+    <select id="selectGeneres">
+                {% for genere in generes %}
+                <option value="{{ genere.id_genere }}">
+                    {{ genere.nom }}
+                </option>
+                {% endfor %}
+            </select>
         <div class="row">
             {% for peli in pelicules %}
                 <div class="col-md-3 col-sm-6 mb-3">
+                <a href="{% url 'info_pelicula' peli.id_pelicula %}" class="custom-card">
                     <div class="card">
                         {% if peli.imatge %}
                             <img src="{{ peli.imatge.url }}" class="card-img-top">
@@ -22,6 +30,7 @@
                             </div>
                         {% endif %}
                     </div>
+                </a>
                 </div>
             {% endfor %}
         </div>

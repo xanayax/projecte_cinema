@@ -9,7 +9,7 @@
     <div class="global-container">
         <form method="POST" action="" enctype="multipart/form-data">
 
-            <h3 class="card-title text-center">Afegeix una sessió</h3>
+            <h3 class="card-title text-center">Afegeix una sessió</h3> <br>
 
             {% csrf_token %}
 
@@ -24,15 +24,15 @@
                 {{ form.id_pelicula }}
             </div>
             <div class="form-group">
-                <label for="titol">Data</label>
+                <label for="data">Data</label>
                 {{ form.data }}
             </div>
             <div class="form-group">
-                <label for="sinopsis">Hora</label>
+                <label for="hora">Hora</label>
                 {{ form.hora }}
             </div>
             <div class="form-group">
-                <label for="titol">Sala</label>
+                <label for="sala">Sala</label>
                 {{ form.id_sala }}
             </div>
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
