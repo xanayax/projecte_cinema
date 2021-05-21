@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Pelicula, Producte, Sessio
+from .models import Pelicula, Producte, Sessio, Comentari
 
 class SignUpForm(UserCreationForm):
 
@@ -24,6 +24,7 @@ class MovieForm(forms.ModelForm):
             'duracio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'puntuacio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'qualificacio': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'preu': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'id_genere': forms.Select(attrs={'class': 'form-control form-control-sm'}),
         }
 
@@ -52,3 +53,13 @@ class SessionForm(forms.ModelForm):
             'id_sala': forms.Select(attrs={'class': 'form-control form-control-sm'}),
         }
 
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comentari
+        exclude = ('data', 'id_pelicula', 'id_usuari')
+
+        widgets = {
+            'id_comentari': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'comentari': forms.Textarea(attrs={'class': 'form-control form-control-sm'}),
+        }

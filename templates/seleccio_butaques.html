@@ -4,50 +4,67 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/butaques.css' %}" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'css/butaques.css' %}"/>
     <script src="{% static 'js/butaques.js' %}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Booking cinema seats</title>
 </head>
 
 <body>
-    <div class="movie-container">
-        <h2>
-            {{ sessio.id_pelicula }}
-        </h2>
-    </div>
+<div class="movie-container">
+    <h2>
+        {{ sessio.id_pelicula }}
+    </h2>
+</div>
 
-    <ul class="showcase">
-        <li>
-            <div class="seat"></div>
-            <p class="info-butaca">Lliures</p>
-        </li>
-        <li>
-            <div class="seat selected"></div>
-            <p class="info-butaca">Seleccionats</p>
-        </li>
-        <li>
-            <div class="seat occupied"></div>
-            <p class="info-butaca">Ocupats</p>
-        </li>
-    </ul>
+<ul class="showcase">
+    <li>
+        <div class="seat"></div>
+        <p class="info-butaca">Lliures</p>
+    </li>
+    <li>
+        <div class="seat selected"></div>
+        <p class="info-butaca">Seleccionats</p>
+    </li>
+    <li>
+        <div class="seat occupied"></div>
+        <p class="info-butaca">Ocupats</p>
+    </li>
+</ul>
+<p class="text">
+    Has seleccionat <span id="count">0</span> seients per <span id="total">0</span>€
+</p>
 
-    <div class="container">
-        <div class="screen"></div>
+
+<div class="container">
+    <div class="screen"></div>
+    <form method="post" action="{% url 'reservar_butaca' sessio.id_sessio %}">
+        {% csrf_token %}
         <div class="row">
-{#            <input type="checkbox" name="butaca" id="1" value="id" hidden>#}
-{#            <label for="1" class="seat"></label>#}
-{#            <input type="checkbox" name="butaca" id="2" value="id" hidden disabled="disabled">#}
-{#            <label for="2" class="seat"></label>#}
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+            {% for b in butaca %}
+                <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+                        {% if b.ocupat %}
+                       disabled="disabled"
+                        {% endif %}
+                >
+
+                <label for="{{ b.id_butaca }}" class="seat"></label>
+
+            {% endfor %}
+
+
+            {#<div class="seat occupied" id="{{ b.id_butaca }}"></div>#}
+            {#    <div class="seat" id="{{ b.id_butaca }}"></div>#}
+
+            {#        <div class="seat"></div>#}
+            {#        <div class="seat"></div>#}
+            {#        <div class="seat"></div>#}
+            {#        <div class="seat"></div>#}
+            {#        <div class="seat"></div>#}
+            {#        <div class="seat"></div>#}
         </div>
 
         <div class="row">
@@ -104,13 +121,13 @@
             <div class="seat"></div>
             <div class="seat"></div>
         </div>
-    </div>
+     <input type="submit" value="Submit">
+    </form>
+</div>
 
-    <p class="text">
-        Has seleccionat <span id="count">0</span> seients per <span id="total">0</span>€
-    </p>
-    <br>
-    <a href="cartellera.html" class="btn btn-primary" role="button">Enrere</a>
+
+<br>
+<a href="cartellera.html" class="btn btn-primary" role="button">Enrere</a>
 </body>
 
 </html>

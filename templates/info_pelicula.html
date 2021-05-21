@@ -37,4 +37,26 @@
             </div>
         </div>
     </div>
+    <div>
+        <h3 class="titol-comentari">Comentaris:</h3><span><a href="{% url 'publicar_comentari' pelicula.id_pelicula %}">Publicar comentari</a></span>
+        <table class="table table-bordered table-striped table-comentari">
+            <thead>
+            <tr>
+                <th>Usuari</th>
+                <th>Comentari</th>
+                <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comentari in comentaris %}
+            <tr>
+                <td>{{ comentari.id_usuari }}</td>
+                <td>{{ comentari.comentari }}</td>
+                <td>{{ comentari.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 {% endblock %}

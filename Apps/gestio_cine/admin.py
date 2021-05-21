@@ -4,7 +4,6 @@ from .models import *
 # Register your models here.
 
 admin.site.register(Producte)
-admin.site.register(Client)
 admin.site.register(Pelicula)
 admin.site.register(Sala)
 admin.site.register(Sessio)

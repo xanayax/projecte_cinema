@@ -1,9 +1,11 @@
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import login_required
+from django.db import connection
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import SignUpForm, MovieForm, ProductForm, SessionForm
+from .forms import SignUpForm, MovieForm, ProductForm, SessionForm, CommentForm
 from .models import *
 
 # Create your views here.
@@ -183,6 +185,7 @@ def deleteMovie(request, id):
 def movieDetails(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
+    comentaris = Comentari.objects.filter(id_pelicula=pelicula)
 
     sessio = Sessio.objects.raw("SELECT s.*"
                                 " FROM gestio_cine_sessio s"
@@ -193,21 +196,71 @@ def movieDetails(request, id):
     context = {
         'pelicula': pelicula,
         'sessio': sessio,
+        'comentaris': comentaris
     }
+
+
+
 
     return render(request, "info_pelicula.html", context)
 
 
 
+@login_required(login_url='/login/')
 def seleccioButaca(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
 
+    butaca = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
+                              " FROM gestio_cine_sala sal"
+                              " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
+                              " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
+                              " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+                              " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
+                              " WHERE ses.id_sessio = " + id)
+
+    #" INNER JOIN gestio_cine_butaca_sessio bs ON ses.id_sessio = bs.id_sessio_id"
+
     context = {
         'sessio': sessio,
+        'butaca': butaca
     }
 
     return render(request, "seleccio_butaques.html", context)
+
+
+
+def reservarButaca(request, id):
+
+    if request.method == 'POST':
+        sessio = Sessio.objects.get(id_sessio=id)
+        butaca = request.POST['butaca']
+        usuari = request.user
+        print(butaca, sessio, usuari)
+
+        # id del client
+        id_client = User.objects.values_list('id', flat=True).filter(username=usuari)
+        print(id_client)
+
+        cursor = connection.cursor()
+        insert = "INSERT INTO gestio_cine_reserva (id_sessio_id) VALUES (%s)"
+        dades = sessio
+        cursor.execute(insert, dades)
+
+
+    #     butaca = request.POST['butaca']
+    #     #sessio = request.POST['sessio']
+    #
+    #     update = Butaca.objects.raw("UPDATE gestio_cine_butaca"
+    #                                 " SET ocupat = 1"
+    #                                 " WHERE id_butaca = " + butaca)
+    #
+    #     cursor = connection.cursor()
+    #     cursor.execute(update)
+    #     print(update)
+    #     row = cursor.fetchone()
+    #     return row
+
 
 
 ##
@@ -359,3 +412,41 @@ def deleteSessio(request, id):
     sessio.delete()
 
     return redirect(to="llistat_sessions")
+
+
+
+
+##
+# Comentaris
+#
+def publicarComentari(request, id):
+
+    pelicula = Pelicula.objects.get(id_pelicula=id)
+    usuari = request.user
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        #print(pelicula, usuari)
+
+        if form.is_valid():
+
+            comment = form.save(commit=False)
+            comment.id_usuari = usuari
+            comment.id_pelicula = pelicula
+            comment.data = date.today()
+
+            comment.save()
+
+            messages.success(request, "El comentari s'ha afegit correctament")
+
+        else:
+            messages.error(request, "S'ha produit un error")
+
+    context = {
+        'form': CommentForm()
+    }
+
+    return render(request, "afegir_comentari.html", context)
+
+
+

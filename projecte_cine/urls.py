@@ -40,7 +40,9 @@ urlpatterns = [
     path('afegir_sessio/', addSessio, name='afegir_sessio'),
     path('editar_sessio/<id>/', editSessio, name='editar_sessio'),
     path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio'),
-    path('seleccio_butaques/<id>/', seleccioButaca, name='seleccio_butaques')
+    path('seleccio_butaques/<id>/', seleccioButaca, name='seleccio_butaques'),
+    path('reservar_butaca/<id>/', reservarButaca, name='reservar_butaca'),
+    path('publicar_comentari/<id>/', publicarComentari, name='publicar_comentari'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -24,6 +24,7 @@
                 <th>Gèneres</th>
                 <th>Director</th>
                 <th>Qualificació</th>
+                <th>Preu</th>
                 <th>Opcions</th>
             </tr>
             </thead>
@@ -34,6 +35,7 @@
                     <td>{{ peli.id_genere.nom }}</td>
                     <td>{{ peli.director }}</td>
                     <td>{{ peli.qualificacio }}</td>
+                    <td>{{ peli.preu }}€</td>
                     <td>
                         <a href="{% url 'afegir_pelicula' %}"><i class="material-icons">add_circle_outline</i></a>
                         <a href="{% url 'editar_pelicula' peli.id_pelicula %}"><i class="material-icons">edit</i></a>
