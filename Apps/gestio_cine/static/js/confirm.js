@@ -53,3 +53,23 @@ function confirmarDeleteSessio(id) {
         }
     })
 }
+
+
+
+function confirmarDeleteComment(id) {
+
+    Swal.fire({
+        title: "Estàs segur d'eliminar el comentari?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#00cc00',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Acceptar',
+        cancelButtonText: 'Cancel·lar'
+    }).then((result) => {
+        if (result.value) {
+            // redirigir
+            window.location.href = "/eliminar_comentari/"+id+"/";
+        }
+    })
+}

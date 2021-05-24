@@ -42,86 +42,128 @@
     <div class="screen"></div>
     <form method="post" action="{% url 'reservar_butaca' sessio.id_sessio %}">
         {% csrf_token %}
+
+{#        {% for bo in butaques_ocupades %}#}
+{#            {{ bo.id_butaca }}#}
+
         <div class="row">
+
             {% for b in butaca %}
-                <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
 
-                        {% if b.ocupat %}
-                       disabled="disabled"
-                        {% endif %}
-                >
+                {% if b.num_butaca > 0 and b.num_butaca < 9 %}
 
-                <label for="{{ b.id_butaca }}" class="seat"></label>
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
 
+
+                            {% if b.id_butaca == bo.id_butaca %}
+                                disabled="disabled"
+                            {% endif %}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
             {% endfor %}
 
-
-            {#<div class="seat occupied" id="{{ b.id_butaca }}"></div>#}
-            {#    <div class="seat" id="{{ b.id_butaca }}"></div>#}
-
-            {#        <div class="seat"></div>#}
-            {#        <div class="seat"></div>#}
-            {#        <div class="seat"></div>#}
-            {#        <div class="seat"></div>#}
-            {#        <div class="seat"></div>#}
-            {#        <div class="seat"></div>#}
         </div>
 
         <div class="row">
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+
+            {% for b in butaca %}
+                {% if b.num_butaca > 8 and b.num_butaca < 17 %}
+
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+
+                            {#                            {% if b.ocupat %}#}
+                            {#                           disabled="disabled"#}
+                            {#                            {% endif %}#}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div class="row">
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+
+            {% for b in butaca %}
+                {% if b.num_butaca > 16 and b.num_butaca < 25 %}
+
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+
+                            {#                            {% if b.ocupat %}#}
+                            {#                           disabled="disabled"#}
+                            {#                            {% endif %}#}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div class="row">
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+
+            {% for b in butaca %}
+                {% if b.num_butaca > 24 and b.num_butaca < 33 %}
+
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+
+                            {#                            {% if b.ocupat %}#}
+                            {#                           disabled="disabled"#}
+                            {#                            {% endif %}#}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div class="row">
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+
+            {% for b in butaca %}
+                {% if b.num_butaca > 32 and b.num_butaca < 41 %}
+
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+
+                            {#                            {% if b.ocupat %}#}
+                            {#                           disabled="disabled"#}
+                            {#                            {% endif %}#}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
+            {% endfor %}
         </div>
 
         <div class="row">
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
-            <div class="seat"></div>
+
+            {% for b in butaca %}
+                {% if b.num_butaca > 40 %}
+
+                    <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+
+
+                            {#                            {% if b.ocupat %}#}
+                            {#                           disabled="disabled"#}
+                            {#                            {% endif %}#}
+                    >
+
+                    <label for="{{ b.id_butaca }}" class="seat"></label>
+
+                {% endif %}
+            {% endfor %}
         </div>
-     <input type="submit" value="Submit">
+{#    {% endfor %}#}
+
+        <input type="submit" value="Submit">
     </form>
 </div>
 

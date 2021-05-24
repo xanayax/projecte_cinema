@@ -125,8 +125,9 @@ class Fila(models.Model):
     num_fila = models.IntegerField(null=False)
     id_sala = models.ForeignKey(Sala, null=False, blank=False, on_delete=models.CASCADE)
 
-    def __int__(self):
+    def __str__(self):
         return str(self.num_fila)
+
 
 
 class Butaca(models.Model):
@@ -134,8 +135,17 @@ class Butaca(models.Model):
     id_butaca = models.AutoField(primary_key=True)
     num_butaca = models.IntegerField(null=False)
     id_fila = models.ForeignKey(Fila, null=False, blank=False, on_delete=models.CASCADE)
-    reserva = models.ManyToManyField(Reserva)
+    reserva = models.ManyToManyField(Reserva, through='Butaca_Reserves')
 
-    def __int__(self):
+    def __str__(self):
         return str(self.num_butaca)
 
+
+class Butaca_Reserves(models.Model):
+
+    id_butaca_reserves = models.AutoField(primary_key=True)
+    id_butaca = models.ForeignKey(Butaca, null=False, blank=False, on_delete=models.CASCADE)
+    id_reserva = models.ForeignKey(Reserva, null=False, blank=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id_butaca_reserves)

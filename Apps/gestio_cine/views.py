@@ -1,7 +1,6 @@
+# imports
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
-from django.db import connection
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -84,6 +83,11 @@ def logOutView(request):
     return redirect('login')
 
 
+
+##
+# Pel·lícules
+#
+
 # Funció per mostrar les pel·lícules a la cartellera
 def allMovies(request):
 
@@ -99,14 +103,16 @@ def allMovies(request):
     return render(request, "cartellera.html", context)
 
 
-def allMoviesById(id_genere):
+# Funció per agafar totes les pel·lícules per generes
+# def allMoviesById(id_genere):
+#
+#     if id_genere:
+#         print(id_genere)
+#         return Pelicula.objects.filter(genere=id_genere)
+#
+#     else:
+#         Pelicula.objects.all()
 
-    if id_genere:
-        print(id_genere)
-        return Pelicula.objects.filter(genere=id_genere)
-
-    else:
-        Pelicula.objects.all()
 
 
 # cridem al decorador per restringir la pàgina si no ets admin
@@ -124,8 +130,9 @@ def allMoviesAdmin(request):
     return render(request, "llistat_pelis_admin.html", context)
 
 
-@superuser_only
+
 # Funció per afegir una pel·lícula
+@superuser_only
 def addMovie(request):
 
     if request.method == 'POST':
@@ -147,6 +154,7 @@ def addMovie(request):
 
 
 
+# Funció per editar una pel·lícula
 @superuser_only
 def editMovie(request, id):
 
@@ -172,6 +180,8 @@ def editMovie(request, id):
     return render(request, "editar_pelicula.html", context)
 
 
+
+# Funció per eliminar una pel·lícula
 @superuser_only
 def deleteMovie(request, id):
 
@@ -182,6 +192,7 @@ def deleteMovie(request, id):
 
 
 
+# Funció per veure la informació d'una pel·lícula i els comentaris de cada una
 def movieDetails(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
@@ -199,14 +210,17 @@ def movieDetails(request, id):
         'comentaris': comentaris
     }
 
-
-
-
     return render(request, "info_pelicula.html", context)
 
 
 
+##
+# Butaques
+#
+
+# Cridem al decorador perquè redirigeixi a la pantalla de login si no està logat
 @login_required(login_url='/login/')
+# Funció per mostrar la pàgina per les butaques
 def seleccioButaca(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
@@ -216,50 +230,43 @@ def seleccioButaca(request, id):
                               " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
                               " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
                               " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+                              #" INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
                               " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
                               " WHERE ses.id_sessio = " + id)
 
-    #" INNER JOIN gestio_cine_butaca_sessio bs ON ses.id_sessio = bs.id_sessio_id"
+
+    butaques_ocupades = Butaca_Reserves.objects.raw("SELECT id_butaca_reserves, id_butaca_id FROM gestio_cine_butaca_reserves")
 
     context = {
         'sessio': sessio,
-        'butaca': butaca
+        'butaca': butaca,
+        'butaques_ocupades': butaques_ocupades,
     }
 
     return render(request, "seleccio_butaques.html", context)
 
 
 
+# Funció per reservar la butaca
+@login_required(login_url='/login/')
 def reservarButaca(request, id):
 
     if request.method == 'POST':
         sessio = Sessio.objects.get(id_sessio=id)
         butaca = request.POST['butaca']
-        usuari = request.user
-        print(butaca, sessio, usuari)
+        print(butaca, sessio)
 
-        # id del client
-        id_client = User.objects.values_list('id', flat=True).filter(username=usuari)
-        print(id_client)
+        add_reserva = Reserva.objects.create(id_sessio=sessio)
+        add_reserva.save()
+        id_reserva_taula_butaca_reserves = add_reserva.id_reserva
 
-        cursor = connection.cursor()
-        insert = "INSERT INTO gestio_cine_reserva (id_sessio_id) VALUES (%s)"
-        dades = sessio
-        cursor.execute(insert, dades)
+        butaca_per_reservar = Butaca.objects.get(id_butaca=butaca)
+        reserva_per_reservar = Reserva.objects.get(id_reserva=id_reserva_taula_butaca_reserves)
 
+        add_butaca_reserves = Butaca_Reserves.objects.create(id_butaca=butaca_per_reservar, id_reserva=reserva_per_reservar)
+        add_butaca_reserves.save()
 
-    #     butaca = request.POST['butaca']
-    #     #sessio = request.POST['sessio']
-    #
-    #     update = Butaca.objects.raw("UPDATE gestio_cine_butaca"
-    #                                 " SET ocupat = 1"
-    #                                 " WHERE id_butaca = " + butaca)
-    #
-    #     cursor = connection.cursor()
-    #     cursor.execute(update)
-    #     print(update)
-    #     row = cursor.fetchone()
-    #     return row
+        return redirect(to='/formulari_pagament')
 
 
 
@@ -267,6 +274,7 @@ def reservarButaca(request, id):
 # Funcions per productes
 ##
 
+# Funció per mostrar tots els productes
 def allProductes(request):
 
     productes = Producte.objects.all()
@@ -279,6 +287,8 @@ def allProductes(request):
     return render(request, "productes.html", context)
 
 
+
+# Funció per mostrar el llistat de tots els productes al panell de l'admin
 @superuser_only
 def allProductesAdmin(request):
 
@@ -292,6 +302,8 @@ def allProductesAdmin(request):
     return render(request, "llistat_productes_admin.html", context)
 
 
+
+# Funció per afegir productes
 @superuser_only
 def addProducte(request):
 
@@ -309,6 +321,8 @@ def addProducte(request):
     return render(request, "afegir_producte.html", context)
 
 
+
+# Funció per editar productes
 @superuser_only
 def editProducte(request, id):
 
@@ -330,6 +344,8 @@ def editProducte(request, id):
     return render(request, "editar_producte.html", context)
 
 
+
+# Funció per esborrar productes
 @superuser_only
 def deleteProducte(request, id):
 
@@ -383,7 +399,7 @@ def addSessio(request):
 
 
 @superuser_only
-# Funció per afegir una sessió
+# Funció per editar una sessió
 def editSessio(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
@@ -419,14 +435,16 @@ def deleteSessio(request, id):
 ##
 # Comentaris
 #
-def publicarComentari(request, id):
+
+# Funció per publicar un comentari
+@login_required(login_url='/login/')
+def publicComment(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
     usuari = request.user
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        #print(pelicula, usuari)
 
         if form.is_valid():
 
@@ -447,6 +465,48 @@ def publicarComentari(request, id):
     }
 
     return render(request, "afegir_comentari.html", context)
+
+
+
+# cridem al decorador per restringir la pàgina si no ets admin
+@superuser_only
+# Funció per mostrar el llistat dels comentaris a la pàgina de l'admin perquè les pugui gestionar
+def allCommentsAdmin(request):
+
+    comentaris = Comentari.objects.all()
+
+    # L' String és el nom de la variable que haig d'usar a la template
+    context = {
+        'comentaris': comentaris
+    }
+
+    return render(request, "llistat_comentaris.html", context)
+
+
+@superuser_only
+# Funció per esborrar un comentari
+def deleteComment(request, id):
+
+    comentari = Comentari.objects.get(id_comentari=id)
+    comentari.delete()
+
+    return redirect(to="llistat_comentaris")
+
+
+
+
+# Pàgina pagament
+def formulariPagament(request):
+
+    pelicula = Pelicula.objects.all()
+
+    # L' String és el nom de la variable que haig d'usar a la template
+    context = {
+        'pelicula': pelicula
+    }
+
+    return render(request, "formulari_pagament.html", context)
+
 
 
 

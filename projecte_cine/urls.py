@@ -42,7 +42,10 @@ urlpatterns = [
     path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio'),
     path('seleccio_butaques/<id>/', seleccioButaca, name='seleccio_butaques'),
     path('reservar_butaca/<id>/', reservarButaca, name='reservar_butaca'),
-    path('publicar_comentari/<id>/', publicarComentari, name='publicar_comentari'),
+    path('publicar_comentari/<id>/', publicComment, name='publicar_comentari'),
+    path('llistat_comentaris/', allCommentsAdmin, name='llistat_comentaris'),
+    path('eliminar_comentari/<id>/', deleteComment, name='eliminar_comentari'),
+    path('formulari_pagament', formulariPagament, name='formulari_pagament')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
