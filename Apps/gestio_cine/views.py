@@ -20,9 +20,6 @@ def superuser_only(function):
     return _inner
 
 
-# Funció per retornar la pàgina índex al obrir la web
-# def homeView(request):
-#     return render(request, "index.html")
 
 
 
@@ -48,6 +45,7 @@ def register_view(request):
 
 # Funció per iniciar sessió a la pàgina
 def login_view(request):
+
     # Si s'envia pel mètode post autentifiquem a l'usuari
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -135,7 +133,7 @@ def add_movie(request):
 
 
         else:
-            messages.error(request, "S'ha produit un error")
+            messages.error(request, "S'ha produit un error, revisa els camps")
             print(form.errors)
 
     context = {
@@ -166,7 +164,7 @@ def edit_movie(request, id):
             messages.success(request, "La pel·lícula s'ha modificat correctament")
 
         else:
-            messages.error(request, "S'ha produit un error")
+            messages.error(request, "S'ha produit un error, revisa els camps")
             print(form.errors)
 
     return render(request, "editar_pelicula.html", context)
