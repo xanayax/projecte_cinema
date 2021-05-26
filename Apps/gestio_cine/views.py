@@ -215,6 +215,7 @@ def seleccio_butaca(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
 
+    # Busquem les butaques per id de sessió
     butaca = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
                                   " FROM gestio_cine_sala sal"
                                   " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
@@ -224,7 +225,7 @@ def seleccio_butaca(request, id):
                                   " WHERE ses.id_sessio = " + id)
 
 
-
+    # Busquem les butaques ocupades per id de sessió
     butaques_ocupades = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
                                              " FROM gestio_cine_sala sal"
                                              " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
