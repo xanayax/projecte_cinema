@@ -1,0 +1,71 @@
+<!--
+    Pàgina per veure la informació d'una pel·lícula.
+-->
+<!--
+    Extén del html base
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="center">{{ pelicula.titol }}</h2>
+
+    <div class="container peli-container">
+        <div class="row">
+            <div class="col-md-3">
+                <img class="img-peli" src="{{ pelicula.imatge.url }}">
+            </div>
+            <div class="col-md-9">
+                <div class="text">
+                    <h4>Sinopsis</h4><br>
+                    <p>{{ pelicula.sinopsis }}</p>
+
+                    <div class="horari">
+                        <h5>Horaris</h5>
+{#                    Mostrem les sessions per cada pel·lícula #}
+                        {% for sess in sessio %}
+                            <a href="{% url 'seleccio_butaques' sess.id_sessio %}" class="btn btn-danger"
+                               role="button">{{ sess.hora }}</a>
+                        {% endfor %}
+                    </div>
+
+                    <p><b>Duració: </b>{{ pelicula.duracio }}</p>
+                    <p><b>Director: </b>{{ pelicula.director }}</p>
+                    <p><b>Qualificació: </b>{{ pelicula.qualificacio }}</p>
+                    <p><b>Gènere: </b>{{ pelicula.id_genere }}</p>
+                    <p><b>Actors: </b>{{ pelicula.actors }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{#    Apartat per posar comentaris #}
+    <div class="container">
+        <h3 class="titol-comentari">Comentaris:</h3><span><a href="{% url 'publicar_comentari' pelicula.id_pelicula %}">Publicar comentari</a></span>
+        <table class="table table-bordered table-striped table-comentari">
+            <thead>
+            <tr>
+                <th>Usuari</th>
+                <th>Comentari</th>
+                <th>Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comentari in comentaris %}
+            <tr>
+                <td>{{ comentari.id_usuari }}</td>
+                <td>{{ comentari.comentari }}</td>
+                <td>{{ comentari.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+{% endblock %}

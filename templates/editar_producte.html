@@ -1,0 +1,49 @@
+<!--
+    Pàgina per editar un producte. Només habilitada per l'administrador
+-->
+<!--
+    Extén del html base
+-->
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="global-container">
+        <form method="POST" action="" enctype="multipart/form-data">
+            <h3 class="card-title text-center">Modifica un producte</h3>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    {{ form.nom }}
+                </div>
+                <div class="form-group">
+                    <label for="preu">Preu</label>
+                    {{ form.preu }}
+                </div>
+                <div class="form-group">
+                    <label for="imatge">Imatge</label>
+                    {{ form.imatge }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Modificar</button>
+        </form>
+
+    </div>
+
+
+{% endblock %}
+
+</body>
+</html>

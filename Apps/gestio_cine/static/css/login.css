@@ -1,0 +1,111 @@
+* {
+	font-family: 'Alegreya Sans', sans-serif;
+}
+
+body {
+    background-color: rgb(245, 245, 245) !important;
+}
+
+.navbar-nav {
+    font-size: larger;
+}
+
+nav .navbar-nav li a {
+    color: black !important;
+}
+
+.ml-auto {
+    margin-right: 5%;
+}
+
+.left {
+    margin-left: 5%;
+}
+
+html,body { 
+	height: 70%;
+}
+
+.global-container{
+	margin-top: 25%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.global-container-login{
+	margin-top: 10%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.global-container-register{
+	margin-top: 25%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+form {
+	padding-top: 10px;
+	font-size: 14px;
+	margin-top: 30px;
+}
+
+.card-title{ font-weight:300; }
+
+.btn{
+	font-size: 14px;
+	margin-top:20px;
+}
+
+
+.login-form{ 
+	width:330px;
+	margin:20px;
+    margin-bottom: 100px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 15px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sign-up{
+	text-align:center;
+	padding:20px 0 0;
+}
+
+.sign-in{
+	text-align:center;
+	padding:20px 0 0;
+}
+
+.alert{
+	margin-bottom:-30px;
+	font-size: 13px;
+	margin-top:20px;
+}
+
+.div-footer {
+    padding-top: 20%;
+}
+
+.sitemap {
+    margin-top: 1%;
+}
+
+.errorlist {
+	list-style-type: none;
+	font-family: 'Alegreya Sans', sans-serif;
+	background-color: #ffc2b8;
+	color: #f02b2b;
+	border-color: #f02b2b;
+}
+
+.div-footer {
+    padding-top: 30%;
+}

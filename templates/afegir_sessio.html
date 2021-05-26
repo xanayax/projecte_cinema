@@ -1,0 +1,49 @@
+<!--
+    Pàgina per afegir una nova sessió a la base de dades. Només habilitada per l'administrador
+-->
+<!--
+    Extén del html base
+-->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="global-container">
+        <form method="POST" action="" enctype="multipart/form-data">
+
+            <h3 class="card-title text-center">Afegeix una sessió</h3> <br>
+
+            {% csrf_token %}
+
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <div class="form-group">
+                <label for="titol">Pelicula</label>
+                {{ form.id_pelicula }}
+            </div>
+            <div class="form-group">
+                <label for="data">Data</label>
+                {{ form.data }}
+            </div>
+            <div class="form-group">
+                <label for="hora">Hora</label>
+                {{ form.hora }}
+            </div>
+            <div class="form-group">
+                <label for="sala">Sala</label>
+                {{ form.id_sala }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+<!--
+    Pàgina que mostra els productes o aperitius de la web. Són informatius, no es poden comprar.
+-->
+<!--
+    Extén del html base
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="center">Productes</h2> <br>
+
+{#    fem un for per mostrar els productes que hi ha a la base de dades#}
+    <div class="container">
+        <div class="row">
+            {% for producte in productes %}
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card">
+                        {% if producte.imatge %}
+                            <img src="{{ producte.imatge.url }}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ producte.nom }}</h5>
+                                <h5 class="card-title">{{ producte.preu }}€</h5>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+<!--
+    Pàgina index amb la cartellera mostrant totes les pel·lícules
+-->
+<!--
+    Extén del html base
+-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="center">Cartellera</h2> <br>
+
+    {#    fem un for per mostrar les pel·lícules que hi ha a la base de dades#}
+    <div class="container">
+        <select id="selectGeneres" class="form-control form-control-sm">
+            {% for genere in generes %}
+                <option value="{{ genere.id_genere }}">
+                    {{ genere.nom }}
+                </option>
+            {% endfor %}
+        </select><br>
+        <div class="row">
+            {% for peli in pelicules %}
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <a href="{% url 'info_pelicula' peli.id_pelicula %}" class="custom-card">
+                        <div class="card">
+                            {% if peli.imatge %}
+                                <img src="{{ peli.imatge.url }}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ peli.titol }}</h5>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

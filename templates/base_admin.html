@@ -1,0 +1,94 @@
+<!--
+    Pàgina plantilla per fer les altres que hereten d'aquesta. Conté elements com el head perquè no
+    estiguin a tots els htmls
+-->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pàgina principal</title>
+
+    {% block link_css %}
+
+    {% endblock %}
+
+    {% block js %}
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+{% block nav %}
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <a href="/llistat_pelicules"><i class="material-icons">theaters</i><span
+                class="icon-text">Gestionar pel·lícula</span></a><br>
+        <a href="/llistat_productes"><i class="material-icons">fastfood</i><span
+                class="icon-text">Gestionar productes</span></a><br>
+        <a href="/llistat_sessions"><i class="material-icons">movie</i><span
+                class="icon-text">Gestionar sessions</span></a><br>
+        <a href="/llistat_comentaris"><i class="material-icons">message</i><span
+                class="icon-text">Gestionar comentaris</span></a>
+    </div>
+
+    <div id="main">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navbar-rounded shadow-sm"
+         style="z-index: 100;">
+
+        <a class="navbar-brand left" href="/"><img src="{% static 'img/images/icon.png' %}" width="45px"></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Cartellera</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productes">Per Picar</a>
+                </li>
+{#              Si l'usuari és administrador i esta logat mostrem l'icona per anar al dashboard de l'administrador #}
+                {% if request.user.is_authenticated and request.user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/llistat_pelicules"><i class="material-icons">dashboard</i></a>
+                    </li>
+                {% endif %}
+            </ul>
+            {#          Si l'usuari no ha iniciat sessió, mostrem els enllaços per crear el compte o iniciar sessió #}
+            {% if not request.user.is_authenticated %}
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Iniciar sessió</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registrar">Crear un compte</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+        {#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió#}
+        {% if request.user.is_authenticated %}
+            <span class="nav-link">Hola, {{ request.user }}</span>
+            <span id="logout"><a href="{% url 'logout' %}">Tancar Sessió</a></span>
+        {% endif %}
+    </nav> <br>
+
+    {% block content %}
+
+    {% endblock %}
+
+{% endblock %}
+
+</div>
+</body>
+</html>
