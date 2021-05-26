@@ -52,6 +52,7 @@ body {
   background-color: #fff;
 }
 
+/* El que fa que la butaca actui com a checkbox */
 input[type=checkbox]:checked + label.seat {
   background-color: #6feaf6;
 }
@@ -117,4 +118,14 @@ p.text span {
 
 .info-butaca {
   font-size: large;
+}
+
+
+#submit-btn {
+
+
+}
+
+.div-footer {
+    padding-top: 30%;
 }

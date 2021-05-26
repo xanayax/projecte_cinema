@@ -1,3 +1,9 @@
+<!--
+    Pàgina per triar butaca. Es diferencien clarament les butaques lliures
+    de les ocupades i les triades per tu. Malauradament només es pot reservar
+    una butaca a la vegada.
+-->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -43,21 +49,24 @@
     <form method="post" action="{% url 'reservar_butaca' sessio.id_sessio %}">
         {% csrf_token %}
 
-{#        {% for bo in butaques_ocupades %}#}
-{#            {{ bo.id_butaca }}#}
-
         <div class="row">
 
+{#        Faig un for per mostrar totes les butaques de la pel·lícula i les vaig separant en rows #}
+{#        per fer la forma de files. I poso l'if dins per saber quines butaques van a cada fila #}
             {% for b in butaca %}
 
                 {% if b.num_butaca > 0 and b.num_butaca < 9 %}
 
+{#                  Llavors dins del checkbox faig un for de les butaques que estan ocupade si comparo les #}
+{#                  ids per saber si estan ocupades. Si ho estan, poso disabled que ja agafa la class de css#}
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
 
+                    {% for bo in butaques_ocupades %}
+                        {% if b.id_butaca == bo.id_butaca %}
+                            disabled="disabled"
+                        {% endif %}
 
-                            {% if b.id_butaca == bo.id_butaca %}
-                                disabled="disabled"
-                            {% endif %}
+                    {% endfor %}
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -74,10 +83,13 @@
 
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
 
+                            {% for bo in butaques_ocupades %}
+                                {% if b.id_butaca == bo.id_butaca %}
+                                    disabled="disabled"
+                                {% endif %}
 
-                            {#                            {% if b.ocupat %}#}
-                            {#                           disabled="disabled"#}
-                            {#                            {% endif %}#}
+                            {% endfor %}
+
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -92,11 +104,12 @@
                 {% if b.num_butaca > 16 and b.num_butaca < 25 %}
 
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+                    {% for bo in butaques_ocupades %}
+                        {% if b.id_butaca == bo.id_butaca %}
+                            disabled="disabled"
+                        {% endif %}
 
-
-                            {#                            {% if b.ocupat %}#}
-                            {#                           disabled="disabled"#}
-                            {#                            {% endif %}#}
+                    {% endfor %}
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -111,11 +124,12 @@
                 {% if b.num_butaca > 24 and b.num_butaca < 33 %}
 
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+                    {% for bo in butaques_ocupades %}
+                        {% if b.id_butaca == bo.id_butaca %}
+                            disabled="disabled"
+                        {% endif %}
 
-
-                            {#                            {% if b.ocupat %}#}
-                            {#                           disabled="disabled"#}
-                            {#                            {% endif %}#}
+                    {% endfor %}
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -130,11 +144,12 @@
                 {% if b.num_butaca > 32 and b.num_butaca < 41 %}
 
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+                    {% for bo in butaques_ocupades %}
+                        {% if b.id_butaca == bo.id_butaca %}
+                            disabled="disabled"
+                        {% endif %}
 
-
-                            {#                            {% if b.ocupat %}#}
-                            {#                           disabled="disabled"#}
-                            {#                            {% endif %}#}
+                    {% endfor %}
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -149,11 +164,12 @@
                 {% if b.num_butaca > 40 %}
 
                     <input type="checkbox" name="butaca" id="{{ b.id_butaca }}" value="{{ b.id_butaca }}" hidden
+                    {% for bo in butaques_ocupades %}
+                        {% if b.id_butaca == bo.id_butaca %}
+                            disabled="disabled"
+                        {% endif %}
 
-
-                            {#                            {% if b.ocupat %}#}
-                            {#                           disabled="disabled"#}
-                            {#                            {% endif %}#}
+                    {% endfor %}
                     >
 
                     <label for="{{ b.id_butaca }}" class="seat"></label>
@@ -161,15 +177,15 @@
                 {% endif %}
             {% endfor %}
         </div>
-{#    {% endfor %}#}
 
-        <input type="submit" value="Submit">
+
+        <input id="submit-btn" type="submit" value="Submit">
     </form>
 </div>
-
-
-<br>
-<a href="cartellera.html" class="btn btn-primary" role="button">Enrere</a>
+<footer>
+    <div class="div-footer">
+    </div>
+</footer>
 </body>
 
 </html>

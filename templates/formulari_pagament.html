@@ -1,3 +1,8 @@
+<!--
+    Pàgina per "pagar" després de reservar una butaca.
+    És només una pàgina estàtica per representar el pas que vindria després de triar butaca
+-->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -27,13 +32,9 @@
                 <div class="form-group">
                     <label for="PaymentAmount">Quantitat a pagar</label>
                     <div class="amount-placeholder">
-                        <span>$</span>
-                        <span>{{ pelicula.preu }}</span>
+                        <span>6</span>
+                        <span>€</span>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label or="NameOnCard">Name on card</label>
-                    <input id="NameOnCard" class="form-control" type="text" maxlength="255">
                 </div>
                 <div class="form-group">
                     <label for="CreditCardNumber">Número de la targeta</label>
@@ -44,7 +45,7 @@
                     <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7">
                 </div>
                 <div class="security-code-group form-group">
-                    <label for="SecurityCode">Codi secret</label>
+                    <label for="SecurityCode">CVV/CVC</label>
                     <div class="input-container">
                         <input id="SecurityCode" class="form-control" type="text">
                         <i id="cvc" class="fa fa-question-circle"></i>
@@ -54,18 +55,9 @@
                         <div class="visa-mc-dis-cvc-preview"></div>
                     </div>
                 </div>
-                <div class="zip-code-group form-group">
-                    <label for="ZIPCode">ZIP/Postal code</label>
-                    <div class="input-container">
-                        <input id="ZIPCode" class="form-control" type="text" maxlength="10">
-                        <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left"
-                            data-content="Enter the ZIP/Postal code for your credit card billing address."><i
-                                class="fa fa-question-circle"></i></a>
-                    </div>
-                </div>
                 <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit">
                     <span class="submit-button-lock"></span>
-                    <span class="align-middle">Pay $500.00</span>
+                    <span class="align-middle">Pagar</span>
                 </button>
             </form>
         </div>

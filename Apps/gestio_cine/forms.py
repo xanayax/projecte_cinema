@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import Pelicula, Producte, Sessio, Comentari
 
 class SignUpForm(UserCreationForm):
@@ -16,7 +18,7 @@ class MovieForm(forms.ModelForm):
         fields = '__all__'
 
         widgets = {
-            'titol': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'titol':  forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'sinopsis': forms.Textarea(attrs={'class': 'form-control form-control-sm'}),
             'generes': forms.Select(attrs={'class': 'form-control form-control-sm'}),
             'director': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
@@ -27,6 +29,14 @@ class MovieForm(forms.ModelForm):
             'preu': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
             'id_genere': forms.Select(attrs={'class': 'form-control form-control-sm'}),
         }
+
+    # validació del preu
+    # def clean_preu(self, *args, **kwargs):
+    #     preu = self.cleaned_data.get("preu")
+    #     if type(preu) == int:
+    #         return preu
+    #     else:
+    #         raise forms.ValidationError("El preu ha de ser un numero")
 
 
 class ProductForm(forms.ModelForm):

@@ -1,3 +1,10 @@
+<!--
+    Pàgina perquè l'administrador pugui gestionar els productes.
+-->
+<!--
+    Extén del html base_admin
+-->
+
 {% extends 'base_admin.html' %}
 {% load static %}
 
@@ -17,6 +24,10 @@
 {% endblock %}
 
 {% block content %}
+    <div>
+        <a href="{% url 'afegir_producte' %}"><i class="material-icons">add_circle_outline</i>Afegir producte</a>
+    </div>
+    <br>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -32,8 +43,6 @@
                     <td>{{ producte.nom }}</td>
                     <td>{{ producte.preu }}</td>
                     <td>
-
-                        <a href="{% url 'afegir_producte' %}"><i class="material-icons">add_circle_outline</i></a>
                         <a href="{% url 'editar_producte' producte.id_producte %}"><i class="material-icons">edit</i></a>
                         <a href="#" onclick="confirmarDeleteProducte({{ producte.id_producte }})"><i class="material-icons">delete</i></a>
                     </td>

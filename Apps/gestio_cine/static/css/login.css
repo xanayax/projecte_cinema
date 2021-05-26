@@ -27,7 +27,25 @@ html,body {
 }
 
 .global-container{
+	margin-top: 25%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.global-container-login{
 	margin-top: 10%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
+.global-container-register{
+	margin-top: 25%;
 	height:100%;
 	display: flex;
     align-items: center;
@@ -72,15 +90,22 @@ form {
 	margin-top:20px;
 }
 
-footer {
-    height: 190px;
-    margin-top: 10%;
-    text-align: center;
-    padding: 3px;
-    background-color: gainsboro;
-    color: black;
+.div-footer {
+    padding-top: 20%;
 }
 
 .sitemap {
     margin-top: 1%;
+}
+
+.errorlist {
+	list-style-type: none;
+	font-family: 'Alegreya Sans', sans-serif;
+	background-color: #ffc2b8;
+	color: #f02b2b;
+	border-color: #f02b2b;
+}
+
+.div-footer {
+    padding-top: 30%;
 }

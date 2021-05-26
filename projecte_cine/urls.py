@@ -19,33 +19,33 @@ from django.conf import settings
 from django.conf.urls.static import static
 from Apps.gestio_cine.views import *
 
+# urls de tota la web
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homeView),
-    path('registrar/', registerView, name='registrar'),
-    path('login/', loginView, name='login'),
-    path('logout/', logOutView, name='logout'),
-    path('cartellera/', allMovies, name='cartellera'),
-    path('llistat_pelicules/', allMoviesAdmin, name='llistat_pelicules'),
-    path('afegir_pelicula/', addMovie, name='afegir_pelicula'),
-    path('editar_pelicula/<id>', editMovie, name='editar_pelicula'),
-    path('eliminar_pelicula/<id>/', deleteMovie, name='eliminar_pelicula'),
-    path('info_pelicula/<id>/', movieDetails, name='info_pelicula'),
-    path('productes/', allProductes, name='productes'),
-    path('llistat_productes/', allProductesAdmin, name='llistat_productes'),
-    path('afegir_producte/', addProducte, name='afegir_producte'),
-    path('editar_producte/<id>/', editProducte, name='editar_producte'),
-    path('eliminar_producte/<id>/', deleteProducte, name='eliminar_producte'),
-    path('llistat_sessions/', allSessionsAdmin, name='llistat_sessions'),
-    path('afegir_sessio/', addSessio, name='afegir_sessio'),
-    path('editar_sessio/<id>/', editSessio, name='editar_sessio'),
-    path('eliminar_sessio/<id>/', deleteSessio, name='eliminar_sessio'),
-    path('seleccio_butaques/<id>/', seleccioButaca, name='seleccio_butaques'),
-    path('reservar_butaca/<id>/', reservarButaca, name='reservar_butaca'),
-    path('publicar_comentari/<id>/', publicComment, name='publicar_comentari'),
-    path('llistat_comentaris/', allCommentsAdmin, name='llistat_comentaris'),
-    path('eliminar_comentari/<id>/', deleteComment, name='eliminar_comentari'),
-    path('formulari_pagament', formulariPagament, name='formulari_pagament')
+    path('registrar/', register_view, name='registrar'),
+    path('login/', login_view, name='login'),
+    path('logout/', logOut_view, name='logout'),
+    path('', all_movies, name='cartellera'),
+    path('llistat_pelicules/', all_movies_admin, name='llistat_pelicules'),
+    path('afegir_pelicula/', add_movie, name='afegir_pelicula'),
+    path('editar_pelicula/<id>', edit_movie, name='editar_pelicula'),
+    path('eliminar_pelicula/<id>/', delete_movie, name='eliminar_pelicula'),
+    path('info_pelicula/<id>/', movie_details, name='info_pelicula'),
+    path('productes/', all_productes, name='productes'),
+    path('llistat_productes/', all_productes_admin, name='llistat_productes'),
+    path('afegir_producte/', add_producte, name='afegir_producte'),
+    path('editar_producte/<id>/', edit_producte, name='editar_producte'),
+    path('eliminar_producte/<id>/', delete_producte, name='eliminar_producte'),
+    path('llistat_sessions/', all_sessions_admin, name='llistat_sessions'),
+    path('afegir_sessio/', add_sessio, name='afegir_sessio'),
+    path('editar_sessio/<id>/', edit_sessio, name='editar_sessio'),
+    path('eliminar_sessio/<id>/', delete_sessio, name='eliminar_sessio'),
+    path('seleccio_butaques/<id>/', seleccio_butaca, name='seleccio_butaques'),
+    path('reservar_butaca/<id>/', reservar_butaca, name='reservar_butaca'),
+    path('publicar_comentari/<id>/', public_comment, name='publicar_comentari'),
+    path('llistat_comentaris/', all_comments_admin, name='llistat_comentaris'),
+    path('eliminar_comentari/<id>/', delete_comment, name='eliminar_comentari'),
+    path('formulari_pagament', formulari_pagament, name='formulari_pagament')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

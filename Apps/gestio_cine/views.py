@@ -21,13 +21,13 @@ def superuser_only(function):
 
 
 # Funció per retornar la pàgina índex al obrir la web
-def homeView(request):
-    return render(request, "index.html")
+# def homeView(request):
+#     return render(request, "index.html")
 
 
 
 # Funció per registrar-se a la pàgina
-def registerView(request):
+def register_view(request):
 
     form = SignUpForm()
 
@@ -47,7 +47,7 @@ def registerView(request):
 
 
 # Funció per iniciar sessió a la pàgina
-def loginView(request):
+def login_view(request):
     # Si s'envia pel mètode post autentifiquem a l'usuari
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -57,7 +57,7 @@ def loginView(request):
 
         # Si l'usuari està a la base de dades comprovem si és admin. Si ho és
         # el redirigim al seu 'dashboard'. Si és un usuari normal el redirigim
-        # a l'index
+        # a la cartellera
         if user is not None:
             superusers = User.objects.get(username=username)
             if superusers.is_superuser == True:
@@ -77,7 +77,7 @@ def loginView(request):
 
 
 # Funció per tancar sessió
-def logOutView(request):
+def logOut_view(request):
 
     logout(request)
     return redirect('login')
@@ -89,7 +89,7 @@ def logOutView(request):
 #
 
 # Funció per mostrar les pel·lícules a la cartellera
-def allMovies(request):
+def all_movies(request):
 
     pelicules = Pelicula.objects.all()
     generes = Generes.objects.all()
@@ -100,25 +100,15 @@ def allMovies(request):
         'generes': generes
     }
 
-    return render(request, "cartellera.html", context)
+    return render(request, "index.html", context)
 
-
-# Funció per agafar totes les pel·lícules per generes
-# def allMoviesById(id_genere):
-#
-#     if id_genere:
-#         print(id_genere)
-#         return Pelicula.objects.filter(genere=id_genere)
-#
-#     else:
-#         Pelicula.objects.all()
 
 
 
 # cridem al decorador per restringir la pàgina si no ets admin
 @superuser_only
 # Funció per mostrar el llistat de pel·lícules a la pàgina de l'admin perquè les pugui gestionar
-def allMoviesAdmin(request):
+def all_movies_admin(request):
 
     pelicules = Pelicula.objects.all()
 
@@ -133,14 +123,16 @@ def allMoviesAdmin(request):
 
 # Funció per afegir una pel·lícula
 @superuser_only
-def addMovie(request):
+def add_movie(request):
 
     if request.method == 'POST':
         form = MovieForm(request.POST, request.FILES)
+
         if form.is_valid():
             form.save()
 
             messages.success(request, "La pel·lícula s'ha afegit correctament")
+
 
         else:
             messages.error(request, "S'ha produit un error")
@@ -156,7 +148,7 @@ def addMovie(request):
 
 # Funció per editar una pel·lícula
 @superuser_only
-def editMovie(request, id):
+def edit_movie(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
 
@@ -183,7 +175,7 @@ def editMovie(request, id):
 
 # Funció per eliminar una pel·lícula
 @superuser_only
-def deleteMovie(request, id):
+def delete_movie(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
     pelicula.delete()
@@ -193,7 +185,7 @@ def deleteMovie(request, id):
 
 
 # Funció per veure la informació d'una pel·lícula i els comentaris de cada una
-def movieDetails(request, id):
+def movie_details(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
     comentaris = Comentari.objects.filter(id_pelicula=pelicula)
@@ -221,21 +213,29 @@ def movieDetails(request, id):
 # Cridem al decorador perquè redirigeixi a la pantalla de login si no està logat
 @login_required(login_url='/login/')
 # Funció per mostrar la pàgina per les butaques
-def seleccioButaca(request, id):
+def seleccio_butaca(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
 
     butaca = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
-                              " FROM gestio_cine_sala sal"
-                              " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
-                              " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
-                              " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
-                              #" INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
-                              " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
-                              " WHERE ses.id_sessio = " + id)
+                                  " FROM gestio_cine_sala sal"
+                                  " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
+                                  " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
+                                  " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+                                  " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
+                                  " WHERE ses.id_sessio = " + id)
 
 
-    butaques_ocupades = Butaca_Reserves.objects.raw("SELECT id_butaca_reserves, id_butaca_id FROM gestio_cine_butaca_reserves")
+
+    butaques_ocupades = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
+                                             " FROM gestio_cine_sala sal"
+                                             " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
+                                             " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
+                                             " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+                                             " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
+                                             " INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
+                                             " WHERE ses.id_sessio = " + id)
+
 
     context = {
         'sessio': sessio,
@@ -249,20 +249,27 @@ def seleccioButaca(request, id):
 
 # Funció per reservar la butaca
 @login_required(login_url='/login/')
-def reservarButaca(request, id):
+def reservar_butaca(request, id):
 
     if request.method == 'POST':
         sessio = Sessio.objects.get(id_sessio=id)
         butaca = request.POST['butaca']
         print(butaca, sessio)
 
+        # fer l'insert a la taula reserves
         add_reserva = Reserva.objects.create(id_sessio=sessio)
         add_reserva.save()
+
+        # agafem l'id del registre que acabem d'insertar
         id_reserva_taula_butaca_reserves = add_reserva.id_reserva
 
+        # agafem l'id de la butaca
         butaca_per_reservar = Butaca.objects.get(id_butaca=butaca)
+
+        # agafem l'id de reserves
         reserva_per_reservar = Reserva.objects.get(id_reserva=id_reserva_taula_butaca_reserves)
 
+        # fem l'insert a la taula butaques_reserves amb les ids obtingudes
         add_butaca_reserves = Butaca_Reserves.objects.create(id_butaca=butaca_per_reservar, id_reserva=reserva_per_reservar)
         add_butaca_reserves.save()
 
@@ -275,7 +282,7 @@ def reservarButaca(request, id):
 ##
 
 # Funció per mostrar tots els productes
-def allProductes(request):
+def all_productes(request):
 
     productes = Producte.objects.all()
 
@@ -290,7 +297,7 @@ def allProductes(request):
 
 # Funció per mostrar el llistat de tots els productes al panell de l'admin
 @superuser_only
-def allProductesAdmin(request):
+def all_productes_admin(request):
 
     productes = Producte.objects.all()
 
@@ -305,7 +312,7 @@ def allProductesAdmin(request):
 
 # Funció per afegir productes
 @superuser_only
-def addProducte(request):
+def add_producte(request):
 
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -324,7 +331,7 @@ def addProducte(request):
 
 # Funció per editar productes
 @superuser_only
-def editProducte(request, id):
+def edit_producte(request, id):
 
     producte = Producte.objects.get(id_producte=id)
 
@@ -347,14 +354,12 @@ def editProducte(request, id):
 
 # Funció per esborrar productes
 @superuser_only
-def deleteProducte(request, id):
+def delete_producte(request, id):
 
     producte = Producte.objects.get(id_producte=id)
     producte.delete()
 
     return redirect(to="llistat_productes")
-
-
 
 
 
@@ -365,7 +370,7 @@ def deleteProducte(request, id):
 # cridem al decorador per restringir la pàgina si no ets admin
 @superuser_only
 # Funció per mostrar el llistat de les sessions de les pel·lícules a la pàgina de l'admin perquè les pugui gestionar
-def allSessionsAdmin(request):
+def all_sessions_admin(request):
 
     sessions = Sessio.objects.all()
 
@@ -380,7 +385,7 @@ def allSessionsAdmin(request):
 
 @superuser_only
 # Funció per afegir una sessió
-def addSessio(request):
+def add_sessio(request):
 
     if request.method == 'POST':
         form = SessionForm(request.POST, request.FILES)
@@ -388,7 +393,6 @@ def addSessio(request):
             form.save()
 
             messages.success(request, "La sessió s'ha afegit correctament")
-            return redirect("/llistat_sessions")
 
     context = {
         'form': SessionForm()
@@ -400,7 +404,7 @@ def addSessio(request):
 
 @superuser_only
 # Funció per editar una sessió
-def editSessio(request, id):
+def edit_sessio(request, id):
 
     sessio = Sessio.objects.get(id_sessio=id)
 
@@ -422,9 +426,9 @@ def editSessio(request, id):
 
 @superuser_only
 # Funció per esborrar una sessió
-def deleteSessio(request, id):
+def delete_sessio(request, id):
 
-    sessio = Sessio.objects.get(id_pelicula=id)
+    sessio = Sessio.objects.get(id_sessio=id)
     sessio.delete()
 
     return redirect(to="llistat_sessions")
@@ -438,7 +442,7 @@ def deleteSessio(request, id):
 
 # Funció per publicar un comentari
 @login_required(login_url='/login/')
-def publicComment(request, id):
+def public_comment(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
     usuari = request.user
@@ -471,7 +475,7 @@ def publicComment(request, id):
 # cridem al decorador per restringir la pàgina si no ets admin
 @superuser_only
 # Funció per mostrar el llistat dels comentaris a la pàgina de l'admin perquè les pugui gestionar
-def allCommentsAdmin(request):
+def all_comments_admin(request):
 
     comentaris = Comentari.objects.all()
 
@@ -485,7 +489,7 @@ def allCommentsAdmin(request):
 
 @superuser_only
 # Funció per esborrar un comentari
-def deleteComment(request, id):
+def delete_comment(request, id):
 
     comentari = Comentari.objects.get(id_comentari=id)
     comentari.delete()
@@ -496,7 +500,7 @@ def deleteComment(request, id):
 
 
 # Pàgina pagament
-def formulariPagament(request):
+def formulari_pagament(request):
 
     pelicula = Pelicula.objects.all()
 

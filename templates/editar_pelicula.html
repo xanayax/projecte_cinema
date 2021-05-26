@@ -1,3 +1,10 @@
+<!--
+    Pàgina per editar una pel·lícula. Només habilitada per l'administrador
+-->
+<!--
+    Extén del html base
+-->
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -5,13 +12,19 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 
+{% block js %}
+    <script src="{% static 'js/validacions.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-    <br><br><br>
+
     <div class="global-container">
+    {{ form.errors }}
 
         <form method="POST" action="" enctype="multipart/form-data">
             <h3 class="card-title text-center">Modifica una pel·lícula</h3>
             {% csrf_token %}
+
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}" role="alert">
                     {{ message }}
@@ -63,8 +76,8 @@
                 {{form.imatge}}
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Modificar</button>
+            <button type="submit" class="btn btn-primary btn-block" onsubmit="return validarPelicules()">Modificar</button>
         </form>
     </div>
-<br><br><br><br><br><br>
+
 {% endblock %}

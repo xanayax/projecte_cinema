@@ -1,3 +1,10 @@
+<!--
+    Pàgina per fer registrar-se a la web
+-->
+<!--
+    Extén del html base
+-->
+
 {% extends 'base.html' %}
 {% load static %}
 {% block link_css %}
@@ -5,8 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<br><br><br><br><br><br><br>
-    <div class="global-container">
+    <div class="global-container-register">
         <div class="card login-form">
             <div class="card-body">
                 <h3 class="card-title text-center">Crea un compte</h3>
@@ -55,18 +61,4 @@
         </div>
     </div>
 
-{#    <script>#}
-{#        var form_fields = document.getElementsByTagName('input')#}
-{#        form_fields[1].placeholder = 'Nom'#}
-{#        form_fields[2].placeholder = 'Cognom'#}
-{#        form_fields[3].placeholder = 'Email'#}
-{#        form_fields[4].placeholder = 'Telèfon'#}
-{#        form_fields[5].placeholder = "Nom d'usuari"#}
-{#        form_fields[6].placeholder = 'Contrasenya'#}
-{#        form_fields[7].placeholder = 'Confirma la contrasenya'#}
-{##}
-{#        for (let field in form_fields) {#}
-{#            form_fields[field].className += 'form-control form-control-sm'#}
-{#        }#}
-{#    </script>#}
 {% endblock %}

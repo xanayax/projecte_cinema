@@ -1,3 +1,10 @@
+<!--
+    Pàgina perquè l'administrador pugui gestionar les pel·lícules.
+-->
+<!--
+    Extén del html base_admin
+-->
+
 {% extends 'base_admin.html' %}
 {% load static %}
 
@@ -16,6 +23,10 @@
 {% endblock %}
 
 {% block content %}
+    <div>
+        <a href="{% url 'afegir_pelicula' %}"><i class="material-icons">add_circle_outline</i>Afegir pel·lícula</a>
+    </div><br>
+
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -37,7 +48,6 @@
                     <td>{{ peli.qualificacio }}</td>
                     <td>{{ peli.preu }}€</td>
                     <td>
-                        <a href="{% url 'afegir_pelicula' %}"><i class="material-icons">add_circle_outline</i></a>
                         <a href="{% url 'editar_pelicula' peli.id_pelicula %}"><i class="material-icons">edit</i></a>
                         <a href="#" onclick="confirmarDelete({{ peli.id_pelicula }})"><i class="material-icons">delete</i></a>
                     </td>

@@ -43,7 +43,7 @@ a.custom-card, a.custom-card:hover {
 
 .card-img-top {
     height: 20vw;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .peli-container {
@@ -88,17 +88,17 @@ a.custom-card, a.custom-card:hover {
     margin-left: 70%;
 }
 
-footer {
-    height: 190px;
-    margin-top: 10%;
-    text-align: center;
-    padding: 3px;
-    background-color: gainsboro;
-    color: black;
-}
-
 .sitemap {
     margin-top: 1%;
+}
+
+footer {
+  opacity: 1; // Leave this as 1
+  background-color: rgba(0,0,0,0.6); // This is in the form rgba(R,G,B,a) where a is your opacity
+}
+
+.div-footer {
+    padding-top: 20%;
 }
 
 .titol-comentari {
@@ -106,3 +106,6 @@ footer {
     margin-left: 15%;
 }
 
+#logout {
+    text-decoration: red;
+}

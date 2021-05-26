@@ -1,3 +1,10 @@
+<!--
+    Pàgina per veure la informació d'una pel·lícula.
+-->
+<!--
+    Extén del html base
+-->
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -9,7 +16,6 @@
 
     <h2 class="center">{{ pelicula.titol }}</h2>
 
-    {#    fem un for per mostrar les pel·lícules que hi ha a la base de dades#}
     <div class="container peli-container">
         <div class="row">
             <div class="col-md-3">
@@ -22,6 +28,7 @@
 
                     <div class="horari">
                         <h5>Horaris</h5>
+{#                    Mostrem les sessions per cada pel·lícula #}
                         {% for sess in sessio %}
                             <a href="{% url 'seleccio_butaques' sess.id_sessio %}" class="btn btn-danger"
                                role="button">{{ sess.hora }}</a>
@@ -31,13 +38,15 @@
                     <p><b>Duració: </b>{{ pelicula.duracio }}</p>
                     <p><b>Director: </b>{{ pelicula.director }}</p>
                     <p><b>Qualificació: </b>{{ pelicula.qualificacio }}</p>
-                    <p><b>Gènere: </b>{{ pelicula.generes }}</p>
+                    <p><b>Gènere: </b>{{ pelicula.id_genere }}</p>
                     <p><b>Actors: </b>{{ pelicula.actors }}</p>
                 </div>
             </div>
         </div>
     </div>
-    <div>
+
+{#    Apartat per posar comentaris #}
+    <div class="container">
         <h3 class="titol-comentari">Comentaris:</h3><span><a href="{% url 'publicar_comentari' pelicula.id_pelicula %}">Publicar comentari</a></span>
         <table class="table table-bordered table-striped table-comentari">
             <thead>

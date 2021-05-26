@@ -1,3 +1,8 @@
+<!--
+    Pàgina plantilla per fer les altres que hereten d'aquesta. Conté elements com el head perquè no
+    estiguin a tots els htmls
+-->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -47,11 +52,12 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/cartellera">Cartellera</a>
+                    <a class="nav-link" href="/">Cartellera</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/productes">Per Picar</a>
                 </li>
+{#              Si l'usuari és administrador i esta logat mostrem l'icona per anar al dashboard de l'administrador #}
                 {% if request.user.is_authenticated and request.user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="/llistat_pelicules"><i class="material-icons">dashboard</i></a>
@@ -73,7 +79,7 @@
         {#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió#}
         {% if request.user.is_authenticated %}
             <span class="nav-link">Hola, {{ request.user }}</span>
-            <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
+            <span id="logout"><a href="{% url 'logout' %}">Tancar Sessió</a></span>
         {% endif %}
     </nav> <br>
 
@@ -83,15 +89,6 @@
 
 {% endblock %}
 
-<footer>
-    <div class="footer-text">
-        <p class="sitemap"><b>Sitemap</b></p>
-        <li><a href="index.html">Principal</a></li>
-        <li><a href="cartellera.html">Cartellera</a></li>
-        <li><a href="login.html">Iniciar sessió</a></li>
-        <li><a href="registrar.html">Crear compte</a></li>
-    </div>
-</footer>
 </div>
 </body>
 </html>
