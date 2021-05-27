@@ -12,14 +12,9 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 
-{% block js %}
-    <script src="{% static 'js/validacions.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
     <div class="global-container">
-    {{ form.errors }}
 
         <form method="POST" action="" enctype="multipart/form-data">
             <h3 class="card-title text-center">Modifica una pel·lícula</h3>
@@ -76,7 +71,7 @@
                 {{form.imatge}}
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block" onsubmit="return validarPelicules()">Modificar</button>
+            <button type="submit" class="btn btn-primary btn-block">Modificar</button>
         </form>
     </div>
 

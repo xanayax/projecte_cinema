@@ -1,15 +1,16 @@
 
-// Validar els camps dels formularis
+// Inicialitzar valors amb placeholder
 
 // pel·ícules
-console.log("hola")
-function validarPelicules() {
-    var preu = document.getElementById('preu');
-    console.log(preu)
-    if (!isNaN(preu)) {
-        alert("El preu ha de ser un numero");
-    }
-    return false;
+var preu = document.getElementById('preu');
+preu.setAttribute('placeholder', 'Només números');
 
-}
+var duracio = document.getElementById('duracio');
+duracio.setAttribute('placeholder', 'Només números');
+
+var puntuacio = document.getElementById('puntuacio');
+puntuacio.setAttribute('placeholder', 'Només números');
+
+var qualificacio = document.getElementById('qualificacio');
+qualificacio.setAttribute('placeholder', 'Només números');
 
