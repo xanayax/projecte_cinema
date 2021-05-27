@@ -18,6 +18,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from Apps.gestio_cine.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 # urls de tota la web
 urlpatterns = [
@@ -46,6 +48,8 @@ urlpatterns = [
     path('llistat_comentaris/', all_comments_admin, name='llistat_comentaris'),
     path('eliminar_comentari/<id>/', delete_comment, name='eliminar_comentari'),
     path('formulari_pagament', formulari_pagament, name='formulari_pagament')
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+#urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
