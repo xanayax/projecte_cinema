@@ -1,1 +1,1 @@
-web: gunicorn projecte_cine.wsgi --log-file -
+web: gunicorn projecte_cine.wsgi
