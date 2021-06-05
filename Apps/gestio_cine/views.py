@@ -1,4 +1,6 @@
 # imports
+import re
+
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -37,18 +39,32 @@ def register_view(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
+        # si la contrasenya té menys de 8 caràcters
         if len(password1) < 8:
-            messages.add_message(request, messages.ERROR, 'La contraseña tiene que tener al menos 8 carácteres')
+            messages.add_message(request, messages.ERROR, 'La contraseña debe tener al menos 8 carácteres')
             context['has_error'] = True
 
+        # si la contrasenya no té majúscules
+        if re.search(r"[A-Z]", password1) is None:
+            messages.add_message(request, messages.ERROR, 'La contraseña debe contener mayúsculas')
+            context['has_error'] = True
+
+        # si la contrasenya no té símbols
+        if re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~" + r'"]', password1) is None:
+            messages.add_message(request, messages.ERROR, 'La contraseña debe contener símbolos')
+            context['has_error'] = True
+
+        # si les contrasenyes no coincideixen
         if password1 != password2:
             messages.add_message(request, messages.ERROR, 'Las contraseñas no coinciden')
             context['has_error'] = True
 
+        # si l'email és vàlid
         if not validate_email(email):
             messages.add_message(request, messages.ERROR, 'Introduce un email válido')
             context['has_error'] = True
 
+        # si l'email ja existeix
         if Usuari.objects.filter(email=email).exists():
             messages.add_message(request, messages.ERROR, 'El correo introducido ya existe')
             context['has_error'] = True
