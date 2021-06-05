@@ -1,13 +1,91 @@
 from datetime import date
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser, BaseUserManager
 
 """
 Models del projecte. Els mateixos models són la base de dades
 
 si l' atribut blank està en false vol dir que no admetrà que estigui buit
 """
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, email, username, first_name, last_name, password=None):
+
+        if not email:
+            raise ValueError("Introdueix un correu electrònic")
+
+        if not username:
+            raise ValueError("Introdueix nom d'usuari")
+
+        if not first_name:
+            raise ValueError("Introdueix nom")
+
+        if not last_name:
+            raise ValueError("Introdueix cognom")
+
+        user = self.model(
+            email = self.normalize_email(email),
+            username = username,
+            first_name = first_name,
+            last_name = last_name
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
+
+    def create_superuser(self, email, username, first_name, last_name, password):
+
+        user = self.create_user(
+            email=self.normalize_email(email),
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            password=password
+        )
+
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
+
+
+# fem una classe per extendre del user base
+class Usuari(AbstractBaseUser):
+
+    email = models.EmailField(verbose_name="email", max_length=60, unique=True, null=False)
+    username = models.CharField(max_length=30, unique=True, null=False)
+    first_name = models.CharField(max_length=50, null=False)
+    last_name = models.CharField(max_length=50, null=False)
+    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
+    last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    # camp que s'utilitzarà per logar
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
+
+
+
 
 class Producte(models.Model):
 
@@ -38,11 +116,11 @@ class Pelicula(models.Model):
     id_pelicula = models.AutoField(primary_key=True)
     titol = models.CharField(max_length=80, null=False)
     sinopsis = models.TextField(null=False)
-    duracio = models.CharField(max_length=5, null=False)
+    duracio = models.IntegerField(null=False)
     director = models.CharField(max_length=30, null=False)
     actors = models.CharField(max_length=100, null=False)
     puntuacio = models.FloatField(null=False)
-    qualificacio = models.CharField(max_length=5, null=False)
+    qualificacio = models.IntegerField(null=False)
     imatge = models.ImageField(null=True)
     preu = models.FloatField(null=False)
     id_genere = models.ForeignKey(Generes, null=False, blank=False, on_delete=models.CASCADE)
@@ -58,7 +136,7 @@ class Comentari(models.Model):
     id_comentari = models.AutoField(primary_key=True)
     comentari = models.TextField(null=False)
     data = models.DateField(default=date.today)
-    id_usuari = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+    id_usuari = models.ForeignKey(Usuari, null=False, blank=False, on_delete=models.CASCADE)
     id_pelicula = models.ForeignKey(Pelicula, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):

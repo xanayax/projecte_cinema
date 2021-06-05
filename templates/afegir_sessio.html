@@ -12,10 +12,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="global-container">
+    <div class="global-container-sessio">
         <form method="POST" action="" enctype="multipart/form-data">
 
             <h3 class="card-title text-center">Afegeix una sessió</h3> <br>
+
+            {{ form.errors }}
 
             {% csrf_token %}
 

@@ -17,37 +17,38 @@
             <div class="card-body">
                 <h3 class="card-title text-center">Crea un compte</h3>
                 {{ form.errors }}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
                 <div class="card-text">
                     <form method="POST" action="">
                         {% csrf_token %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}" role="alert">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
+
                         <div class="form-group">
                             <label for="first_name">Nom</label>
-                            <input type="text" class="form-control form-control-sm" name="first_name" required>
+                            <input type="text" class="form-control form-control-sm" name="first_name">
                         </div>
                         <div class="form-group">
                             <label for="last_name">Cognom</label>
-                            <input type="text" class="form-control form-control-sm" name="last_name" required>
+                            <input type="text" class="form-control form-control-sm" name="last_name">
                         </div>
                         <div class="form-group">
                             <label for="email">Correu electrònic</label>
-                            <input type="email" class="form-control form-control-sm" name="email" required>
+                            <input type="email" class="form-control form-control-sm" name="email">
                         </div>
                         <div class="form-group">
                             <label for="username">Nom d'usuari</label>
-                            <input type="tel" class="form-control form-control-sm" name="username" required>
+                            <input type="tel" class="form-control form-control-sm" name="username">
                         </div>
                         <div class="form-group">
                             <label for="password1">Contrasenya</label>
-                            <input type="password" class="form-control form-control-sm" name="password1" required>
+                            <input type="password" class="form-control form-control-sm" name="password1">
                         </div>
                         <div class="form-group">
                             <label for="password">Repeteix la contrasenya</label>
-                            <input type="password" class="form-control form-control-sm" name="password2" required>
+                            <input type="password" class="form-control form-control-sm" name="password2">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Registrar</button>
 

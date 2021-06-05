@@ -20,6 +20,7 @@
 
         <form method="POST" action="" enctype="multipart/form-data">
             <h3 class="card-title text-center">Afegeix una pel·lícula</h3>
+            {{ form.errors }}
             {% csrf_token %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}" role="alert">

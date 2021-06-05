@@ -71,6 +71,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'gestio_cine.Usuari'
+
 WSGI_APPLICATION = 'projecte_cine.wsgi.application'
 
 

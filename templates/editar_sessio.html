@@ -13,11 +13,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="global-container">
+    <div class="global-container-sessio">
 
         <form method="POST" action="" enctype="multipart/form-data">
 
             <h3 class="card-title text-center">Modifica una sessió</h3>
+
+            {{ form.errors }}
+
             {% csrf_token %}
 
             {% for message in messages %}

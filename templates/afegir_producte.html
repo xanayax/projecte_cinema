@@ -13,16 +13,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="global-container">
+    <div class="global-container-sessio">
 
         <form method="POST" action="" enctype="multipart/form-data">
             <h3 class="card-title text-center">Afegeix un producte</h3>
+            {{ form.errors }}
             {% csrf_token %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
 
             <div class="form-group">
                 <label for="nom">Nom</label>

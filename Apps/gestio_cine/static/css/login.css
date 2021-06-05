@@ -53,6 +53,15 @@ html,body {
 	padding: 10px;
 }
 
+.global-container-sessio{
+	margin-top: 10%;
+	height:100%;
+	display: flex;
+    align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+
 form {
 	padding-top: 10px;
 	font-size: 14px;
@@ -101,9 +110,10 @@ form {
 .errorlist {
 	list-style-type: none;
 	font-family: 'Alegreya Sans', sans-serif;
-	background-color: #ffc2b8;
-	color: #f02b2b;
-	border-color: #f02b2b;
+	background-color: #F8D7DA;
+	color: #a80000;
+	border-color: #a80000;
+	border-radius: 5px;
 }
 
 .div-footer {
