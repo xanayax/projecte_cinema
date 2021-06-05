@@ -139,6 +139,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/img/poster_img')
 CSRF_COOKIE_SECURE = False
 
 
+# email config
+EMAIL_FROM_USER = 'Administrador'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sapaxavi5@gmail.com'
+EMAIL_HOST_PASSWORD = 'X3MiGCRVD2d4vy6'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+
 # tags pels missatges
 MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.INFO: 'info',

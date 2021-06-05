@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
@@ -45,7 +47,12 @@ urlpatterns = [
     path('publicar_comentari/<id>/', public_comment, name='publicar_comentari'),
     path('llistat_comentaris/', all_comments_admin, name='llistat_comentaris'),
     path('eliminar_comentari/<id>/', delete_comment, name='eliminar_comentari'),
-    path('formulari_pagament', formulari_pagament, name='formulari_pagament')
+    path('formulari_pagament', formulari_pagament, name='formulari_pagament'),
+    path('activar_compte/<uidb64>/<token>', activate_user, name='activar_compte'),
+    path('password_reset/', PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+    path('password_reset/done', PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password_reset_complete/', PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

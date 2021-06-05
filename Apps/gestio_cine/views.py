@@ -1,15 +1,22 @@
 # imports
 import re
-
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterForm, MovieForm, ProductForm, SessionForm, CommentForm
+from django.urls import reverse
+from .forms import MovieForm, ProductForm, SessionForm, CommentForm
 from .models import *
 from django.contrib.auth import get_user_model
 from validate_email import validate_email
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_str, force_text, force_bytes, DjangoUnicodeDecodeError
+from .utils import generate_token
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 # Create your views here.
 
@@ -24,13 +31,34 @@ def superuser_only(function):
     return _inner
 
 
+# funció per enviar un correu
+def send_email(user, request):
 
+    current_site = get_current_site(request)
+    email_subject = 'Activa el teu compte'
+    email_body = render_to_string('activar_compte.html', {
+        'user': user,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': generate_token.make_token(user)
+    })
+
+    email = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_FROM_USER,
+                to=[user.email]
+                 )
+    email.send()
+
+
+
+
+# funció per registrar un usuari
 def register_view(request):
 
     if request.method == 'POST':
 
         context = {
-            'has_error': False
+            'has_error': False,
+            'data': request.POST
         }
         email = request.POST.get('email')
         username = request.POST.get('username')
@@ -70,35 +98,40 @@ def register_view(request):
             context['has_error'] = True
 
         if context['has_error']:
-            return render(request, "registrar.html")
+            return render(request, "registrar.html", context)
 
         user = Usuari.objects.create_user(email=email, username=username, first_name=first_name, last_name=last_name)
         user.set_password(password1)
         user.save()
 
+        send_email(user, request)
+
+        messages.add_message(request, messages.SUCCESS, "T'hem enviat un correu per verificar el teu compte")
         return redirect(to='/login')
 
     return render(request, "registrar.html")
 
 
-# # Funció per registrar-se a la pàgina
-# def register_view(request):
-#
-#     form = RegisterForm()
-#
-#     # Si s'envia pel mètode post guardem el formulari
-#     if request.method == 'POST':
-#         form = RegisterForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#
-#             # agafem el nom de l'usuari
-#             email = form.cleaned_data.get('email')
-#             messages.success(request, "Compte de l'usuari " + email + " creada amb èxit")
-#             return redirect("/login")
-#
-#     context = {'form': form}
-#     return render(request, "registrar.html", context)
+
+def activate_user(request, uidb64, token):
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = Usuari.objects.get(pk=uid)
+
+    except Exception as e:
+        user=None
+
+    if user and generate_token.check_token(user,token):
+        user.is_email_verified = True
+        user.save()
+
+        messages.success(request, "Has verificat el correu, pots iniciar sessió")
+        return redirect(to='/login')
+
+    return  render(request, 'activar_compte_fail.html')
+
+
 
 
 # Funció per iniciar sessió a la pàgina
@@ -110,6 +143,9 @@ def login_view(request):
         password = request.POST.get('password')
 
         user = authenticate(request, email=email, password=password)
+
+        if not (user.is_email_verified):
+            messages.error(request, "Falta verificar el compte, t'hem enviat un correu per verificar-lo")
 
         # Si l'usuari està a la base de dades comprovem si és admin. Si ho és
         # el redirigim al seu 'dashboard'. Si és un usuari normal el redirigim
@@ -127,7 +163,7 @@ def login_view(request):
         else:
             messages.error(request, 'Correu o contrasenya incorrecta')
 
-    context = {}
+    context = {'data': request.POST}
 
     return render(request, "login.html", context)
 

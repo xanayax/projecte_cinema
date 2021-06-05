@@ -16,31 +16,30 @@
         <div class="card login-form">
             <div class="card-body">
                 <h3 class="card-title text-center">Crea un compte</h3>
-                {{ form.errors }}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 <div class="card-text">
                     <form method="POST" action="">
                         {% csrf_token %}
 
                         <div class="form-group">
                             <label for="first_name">Nom</label>
-                            <input type="text" class="form-control form-control-sm" name="first_name">
+                            <input type="text" class="form-control form-control-sm" name="first_name" value="{{ data.first_name }}">
                         </div>
                         <div class="form-group">
                             <label for="last_name">Cognom</label>
-                            <input type="text" class="form-control form-control-sm" name="last_name">
+                            <input type="text" class="form-control form-control-sm" name="last_name" value="{{ data.last_name }}">
                         </div>
                         <div class="form-group">
                             <label for="email">Correu electrònic</label>
-                            <input type="email" class="form-control form-control-sm" name="email">
+                            <input type="email" class="form-control form-control-sm" name="email" value="{{ data.email }}">
                         </div>
                         <div class="form-group">
                             <label for="username">Nom d'usuari</label>
-                            <input type="tel" class="form-control form-control-sm" name="username">
+                            <input type="tel" class="form-control form-control-sm" name="username" value="{{ data.username }}">
                         </div>
                         <div class="form-group">
                             <label for="password1">Contrasenya</label>
@@ -54,6 +53,9 @@
 
                         <div class="sign-in">
                             Ja tens compte? <a href="/login">Inicia sessió</a>
+                        </div>
+                        <div class="sign-up">
+                            Has oblidat la contrasenya? <a href="/password_reset">Recupera-la</a>
                         </div>
                     </form>
                 </div>
