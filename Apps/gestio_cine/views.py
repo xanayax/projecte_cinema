@@ -17,6 +17,7 @@ from django.utils.encoding import force_str, force_text, force_bytes, DjangoUnic
 from .utils import generate_token
 from django.core.mail import EmailMessage
 from django.conf import settings
+from .filters import PeliculesFilter
 
 # Create your views here.
 
@@ -47,7 +48,6 @@ def send_email(user, request):
                 to=[user.email]
                  )
     email.send()
-
 
 
 
@@ -112,7 +112,7 @@ def register_view(request):
     return render(request, "registrar.html")
 
 
-
+# activar el compte de l'usuari
 def activate_user(request, uidb64, token):
 
     try:
@@ -180,16 +180,23 @@ def logOut_view(request):
 # Pel·lícules
 #
 
+# def is_valid_queryparam(param):
+#     return param != '' and param is not None
+
 # Funció per mostrar les pel·lícules a la cartellera
 def all_movies(request):
 
     pelicules = Pelicula.objects.all()
     generes = Generes.objects.all()
 
+    myFilter = PeliculesFilter(request.GET, queryset=pelicules)
+    pelicules = myFilter.qs
+
     # L' String és el nom de la variable que haig d'usar a la template
     context = {
         'pelicules': pelicules,
-        'generes': generes
+        'generes': generes,
+        'myFilter': myFilter
     }
 
     return render(request, "index.html", context)
@@ -572,6 +579,7 @@ def public_comment(request, id):
 
     pelicula = Pelicula.objects.get(id_pelicula=id)
     usuari = request.user
+    print(usuari)
 
     if request.method == 'POST':
         form = CommentForm(request.POST)

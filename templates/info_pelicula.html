@@ -47,7 +47,8 @@
 
 {#    Apartat per posar comentaris #}
     <div class="container">
-        <h3 class="titol-comentari">Comentaris:</h3><span><a href="{% url 'publicar_comentari' pelicula.id_pelicula %}">Publicar comentari</a></span>
+        <h3 class="titol-comentari">Comentaris:</h3>
+        <button class="btn-comments"><a href="{% url 'publicar_comentari' pelicula.id_pelicula %}">Publicar comentari</a></button><br><br>
         <table class="table table-bordered table-striped table-comentari">
             <thead>
             <tr>

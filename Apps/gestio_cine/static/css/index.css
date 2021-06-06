@@ -76,12 +76,12 @@ a.custom-card, a.custom-card:hover {
 }
 
 .btn-primary {
-    z-index: 999;
-    float: left;
-    margin-top: 1%;
-    margin-left: -253px;
-    width: 181px;
-    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.btn-comments {
+    margin-left: 10px;
+    background-color: lightgrey;
 }
 
 .horari {

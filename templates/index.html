@@ -18,15 +18,22 @@
 
     {#    fem un for per mostrar les pel·lícules que hi ha a la base de dades#}
     <div class="container">
-        <select id="selectGeneres" class="form-control form-control-sm">
-            {% for genere in generes %}
-                <option value="{{ genere.id_genere }}">
-                    {{ genere.nom }}
-                </option>
-            {% endfor %}
-        </select><br>
+
+        <form method="get">
+            <div class="form-group">
+                <label for="genere">Genere</label>
+                {{ myFilter.form.id_genere }}
+                <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+
+        </form>
+        <br><br>
+
         <div class="row">
             {% for peli in pelicules %}
+                {% if peli not in pelicules %}
+                    <p>No s'han trobat pelicules</p>
+                {% endif %}
                 <div class="col-md-3 col-sm-6 mb-3">
                     <a href="{% url 'info_pelicula' peli.id_pelicula %}" class="custom-card">
                         <div class="card">
