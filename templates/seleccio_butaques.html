@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{% static 'css/butaques.css' %}"/>
     <script src="{% static 'js/butaques.js' %}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <title>Booking cinema seats</title>
 </head>
 
@@ -39,9 +41,6 @@
         <p class="info-butaca">Ocupats</p>
     </li>
 </ul>
-<p class="text">
-    Has seleccionat <span id="count">0</span> seients per <span id="total">0</span>€
-</p>
 
 
 <div class="container">
@@ -178,8 +177,7 @@
             {% endfor %}
         </div>
 
-
-        <input id="submit-btn" type="submit" value="Submit">
+        <button id="selectBtn" class="btn btn-2 btn-sep icon-cart" type="submit">Comprar</button>
     </form>
 </div>
 <footer>

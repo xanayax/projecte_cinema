@@ -48,6 +48,7 @@ urlpatterns = [
     path('llistat_comentaris/', all_comments_admin, name='llistat_comentaris'),
     path('eliminar_comentari/<id>/', delete_comment, name='eliminar_comentari'),
     path('formulari_pagament', formulari_pagament, name='formulari_pagament'),
+    path('update_item/', updateItem, name='update_item'),
     path('activar_compte/<uidb64>/<token>', activate_user, name='activar_compte'),
     path('password_reset/', PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
     path('password_reset/done', PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),

@@ -23,12 +23,35 @@
     {% block js %}
 
     {% endblock %}
+
+    {#    <script type="text/javascript">#}
+    {#        var user = '{{ request.user}}'#}
+    {##}
+    {#        function getCookie(name) {#}
+    {#            let cookieValue = null;#}
+    {#            if (document.cookie && document.cookie !== '') {#}
+    {#                const cookies = document.cookie.split(';');#}
+    {#                for (let i = 0; i < cookies.length; i++) {#}
+    {#                    const cookie = cookies[i].trim();#}
+    {#                    // Does this cookie string begin with the name we want?#}
+    {#                    if (cookie.substring(0, name.length + 1) === (name + '=')) {#}
+    {#                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));#}
+    {#                        break;#}
+    {#                    }#}
+    {#                }#}
+    {#            }#}
+    {#            return cookieValue;#}
+    {#        }#}
+    {##}
+    {#        const csrftoken = getCookie('csrftoken');#}
+    {#    </script>#}
 </head>
 
 <body>
 
 {% block nav %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navbar-rounded shadow-sm" style="z-index: 100;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navbar-rounded shadow-sm"
+         style="z-index: 100;">
 
         <a class="navbar-brand left" href="/"><img src="{% static 'img/images/icon.png' %}" width="45px"></a>
 
@@ -50,22 +73,22 @@
                     </li>
                 {% endif %}
             </ul>
-{#          Si l'usuari no ha iniciat sessió, mostrem els enllaços per crear el compte o iniciar sessió #}
+            {#          Si l'usuari no ha iniciat sessió, mostrem els enllaços per crear el compte o iniciar sessió #}
             {% if not request.user.is_authenticated %}
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Iniciar sessió</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/registrar">Crear un compte</a>
-                </li>
-            </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Iniciar sessió</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registrar">Crear un compte</a>
+                    </li>
+                </ul>
             {% endif %}
         </div>
-{#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió #}
+        {#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió #}
         {% if request.user.is_authenticated %}
-        <span class="nav-link">Hola, {{ request.user.username }}</span>
-        <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
+            <span class="nav-link">Hola, {{ request.user.username }}</span>
+            <span><a href="{% url 'logout' %}">Tancar Sessió</a></span>
         {% endif %}
     </nav>
 {% endblock %}

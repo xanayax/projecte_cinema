@@ -30,13 +30,6 @@
             </div>
             <form>
                 <div class="form-group">
-                    <label for="PaymentAmount">Quantitat a pagar</label>
-                    <div class="amount-placeholder">
-                        <span>6</span>
-                        <span>€</span>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="CreditCardNumber">Número de la targeta</label>
                     <input id="CreditCardNumber" class="null card-image form-control" type="text">
                 </div>
@@ -59,6 +52,24 @@
                     <span class="submit-button-lock"></span>
                     <span class="align-middle">Pagar</span>
                 </button>
+            </form>
+        </div>
+    </div>
+   <div class="container">
+        <div id="Checkout" class="inline">
+            <h1>Resum de compra</h1>
+            <div class="card-row">
+
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="numSeient">Número de seient</label>
+                    <input class="null card-image form-control col-md-6" type="text" value="{{ butaca }}">
+                </div>
+                <div class="form-group">
+                    <label for="preu">Preu</label>
+                    <input class="null card-image form-control col-md-6" type="text" value="6€">
+                </div>
             </form>
         </div>
     </div>

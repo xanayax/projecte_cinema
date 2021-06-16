@@ -16,7 +16,8 @@
 
     <h2 class="center">Productes</h2> <br>
 
-{#    fem un for per mostrar els productes que hi ha a la base de dades#}
+    {#    fem un for per mostrar els productes que hi ha a la base de dades#}
+
     <div class="container">
         <div class="row">
             {% for producte in productes %}
@@ -25,8 +26,11 @@
                         {% if producte.imatge %}
                             <img src="{{ producte.imatge.url }}" class="card-img-top">
                             <div class="card-body">
-                                <h5 class="card-title">{{ producte.nom }}</h5>
-                                <h5 class="card-title">{{ producte.preu }}€</h5>
+                                <h5 class="card-title nom">{{ producte.nom }}</h5>
+                                <h5 class="card-title">{{ producte.preu }} €</h5>
+                                <button data-product="{{ producte.id_producte }}" data-action="add"
+                                        class="btn btn-outline-secondary add-btn js-add-product">Add to Cart
+                                </button>
                             </div>
                         {% endif %}
                     </div>

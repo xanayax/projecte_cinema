@@ -109,3 +109,23 @@ footer {
 #logout {
     text-decoration: red;
 }
+
+
+.cart{
+	float: right;
+	text-align: center;
+}
+
+.total-text p{
+	display: inline;
+}
+
+#cart-items{
+	position: absolute;
+	right: 20px;
+	top: 10%;
+	background-color: antiquewhite;
+	margin-top: 50px;
+	padding: 50px 40px;
+	z-index: 999;
+}
