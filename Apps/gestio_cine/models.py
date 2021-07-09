@@ -212,6 +212,7 @@ class Butaca_Reserves(models.Model):
     id_butaca_reserves = models.AutoField(primary_key=True)
     id_butaca = models.ForeignKey(Butaca, null=False, blank=False, on_delete=models.CASCADE)
     id_reserva = models.ForeignKey(Reserva, null=False, blank=False, on_delete=models.CASCADE)
+    id_sessio = models.ForeignKey(Sessio, null=True, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.id_butaca_reserves)

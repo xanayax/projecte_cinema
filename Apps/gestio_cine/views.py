@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+from django.db import connection
 from .forms import MovieForm, ProductForm, SessionForm, CommentForm
 from .models import *
 from django.contrib.auth import get_user_model
@@ -329,20 +329,30 @@ def seleccio_butaca(request, id):
                                   " WHERE ses.id_sessio = " + id)
 
     # funció per agafar totes les butaques ocupades
-    butaques_ocupades = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
-                                             " FROM gestio_cine_sala sal"
-                                             " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
-                                             " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
-                                             " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+    # butaques_ocupades = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
+    #                                          " FROM gestio_cine_sala sal"
+    #                                          " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
+    #                                          " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
+    #                                          " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
+    #                                          " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
+    #                                          " INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
+    #                                          " WHERE ses.id_sessio = " + id)
+
+    butaques_ocupades = Pelicula.objects.raw("SELECT br.*, b.*, p.id_pelicula "
+                                             " FROM gestio_cine_butaca_reserves br"
+                                             " INNER JOIN gestio_cine_butaca b ON br.id_butaca_id = b.id_butaca"
+                                             " INNER JOIN gestio_cine_sessio ses ON br.id_sessio_id = ses.id_sessio"
+                                             " INNER JOIN gestio_cine_reserva r ON br.id_reserva_id = r.id_reserva"
                                              " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
-                                             " INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
-                                             " WHERE ses.id_sessio = " + id)
+                                             " WHERE br.id_sessio_id = " + id)
 
     context = {
         'sessio': sessio,
         'butaca': butaca,
         'butaques_ocupades': butaques_ocupades,
     }
+
+    print(butaques_ocupades)
 
     return render(request, "seleccio_butaques.html", context)
 
@@ -373,7 +383,8 @@ def reservar_butaca(request, id):
 
         # fem l'insert a la taula butaques_reserves amb les ids obtingudes
         add_butaca_reserves = Butaca_Reserves.objects.create(id_butaca=butaca_per_reservar,
-                                                             id_reserva=reserva_per_reservar)
+                                                             id_reserva=reserva_per_reservar,
+                                                             id_sessio=sessio)
         add_butaca_reserves.save()
 
         return redirect(to='/formulari_pagament')
