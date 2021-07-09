@@ -36,6 +36,42 @@ def superuser_only(function):
     return _inner
 
 
+# activar el compte de l'usuari
+def activate_user(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = Usuari.objects.get(pk=uid)
+
+    except Exception as e:
+        user = None
+
+    if user and generate_token.check_token(user, token):
+        user.is_email_verified = True
+        user.save()
+
+        messages.success(request, "Has verificat el correu, pots iniciar sessió")
+        return redirect(to='/login')
+
+    return render(request, 'activar_compte_fail.html')
+
+
+# funció per enviar un correu per activar el compte
+def send_email(user, request):
+    current_site = get_current_site(request)
+    email_subject = 'Activa el teu compte'
+    email_body = render_to_string('activar_compte.html', {
+        'user': user,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': generate_token.make_token(user)
+    })
+
+    email = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_FROM_USER,
+                         to=[user.email]
+                         )
+    email.send()
+
+
 
 # funció per registrar un usuari
 def register_view(request):
@@ -153,41 +189,6 @@ def logOut_view(request):
     logout(request)
     return redirect('login')
 
-
-# activar el compte de l'usuari
-def activate_user(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = Usuari.objects.get(pk=uid)
-
-    except Exception as e:
-        user = None
-
-    if user and generate_token.check_token(user, token):
-        user.is_email_verified = True
-        user.save()
-
-        messages.success(request, "Has verificat el correu, pots iniciar sessió")
-        return redirect(to='/login')
-
-    return render(request, 'activar_compte_fail.html')
-
-
-# funció per enviar un correu
-def send_email(user, request):
-    current_site = get_current_site(request)
-    email_subject = 'Activa el teu compte'
-    email_body = render_to_string('activar_compte.html', {
-        'user': user,
-        'domain': current_site,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': generate_token.make_token(user)
-    })
-
-    email = EmailMessage(subject=email_subject, body=email_body, from_email=settings.EMAIL_FROM_USER,
-                         to=[user.email]
-                         )
-    email.send()
 
 
 
