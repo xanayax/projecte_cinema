@@ -30,6 +30,18 @@ class MovieForm(forms.ModelForm):
         }
 
 
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
+        exclude = ['password', 'username', 'date_joined', 'email', 'is_active', 'is_staff']
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+        }
+
+
 
 class ProductForm(forms.ModelForm):
     class Meta:

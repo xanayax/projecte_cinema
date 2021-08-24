@@ -1,0 +1,54 @@
+{% comment %}
+<!--
+    Pàgina per editar una pel·lícula. Només habilitada per l'administrador
+-->
+<!--
+    Extén del html base
+-->
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/validacions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="global-container">
+
+
+        <form method="POST" action="" enctype="multipart/form-data">
+            <h3 class="card-title text-center">Modifica una pel·lícula</h3>
+            {% csrf_token %}
+
+            {{ form.errors }}
+
+            {#            {% for message in messages %}#}
+            {#                <div class="alert alert-{{ message.tags }}" role="alert">#}
+            {#                    {{ message }}#}
+            {#                </div>#}
+            {#            {% endfor %}#}
+            <div class="form-group">
+                <label for="first_name">Nom</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="last_name">Cognoms</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="profile_pic">Imatge</label>
+                <img class="prof-pic" src="{{ request.user.profile_pic.url }}"/>
+                {{ form.profile_pic }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Modificar</button>
+        </form>
+    </div>
+
+{% endblock %}{% endcomment %}

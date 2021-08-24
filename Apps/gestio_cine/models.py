@@ -62,6 +62,7 @@ class Usuari(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True, null=False)
     first_name = models.CharField(max_length=50, null=False)
     last_name = models.CharField(max_length=50, null=False)
+    profile_pic = models.ImageField(null=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)

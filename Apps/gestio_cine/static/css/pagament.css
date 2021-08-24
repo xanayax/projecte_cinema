@@ -220,3 +220,22 @@ input:focus {
     border-color: #b0e5e3!important;
     background-color: #EEF9F9!important;
 }
+
+.card-img {
+    width: 50% !important;
+
+}
+
+footer {
+    margin-bottom: 20%;
+}
+
+.inline-form {
+    display: flex;
+    justify-content: left;
+}
+
+#download {
+    margin-left: 43%;
+    margin-top: 5%;
+}

@@ -14,13 +14,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/pagament.css' %}"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script defer src="{% static 'js/descarregarPDF.js' %}"></script>
+    <script defer src="{% static 'js/pagament.js' %}"></script>
 </head>
 
 <body>
+
+    <div class="w3-sidebar w3-bar-block" style="width:25%;right:0;padding-bottom:20%">
+        <h3 class="w3-bar-item">Menu</h3>
+        {% for producte in productes %}
+            <h5 id="producte-nom">{{ producte.nom }}</h5>
+            <h5 id="producte-preu">{{ producte.preu }}€</h5>
+            <img src="{{ producte.imatge.url }}" class="card-img"><br><br>
+            <button data-product="{{ producte.nom }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Afegir a la comanda
+            </button><br><br><br><br>
+        {% endfor %}
+    </div>
+    <br><br><br>
+
     <div class="container">
         <div class="inline checkout">
             <h1>Pagament</h1>
@@ -63,19 +77,24 @@
             <div class="card-row">
 
             </div>
-            <form>
+            <form id="form">
                 <div class="form-group">
-                    <label for="numSeient">Número de seient</label>
-                    <input class="null card-image form-control col-md-6" type="text" value="{{ butaca }}">
+                    <label for="preu-total">Preu</label>
+                    <input id="preu-total" class="null card-image form-control col-md-6" type="text" value="6.00€" disabled step=".01">
                 </div>
                 <div class="form-group">
-                    <label for="preu">Preu</label>
-                    <input class="null card-image form-control col-md-6" type="text" value="6€">
+                    <label for="numSeient">Número de seient</label>
+                    <input class="null card-image form-control col-md-6" type="text" value="{{ butaca }}" disabled>
                 </div>
             </form>
         </div>
-       <button id="download">Descarrega el ticket</button>
+       <button id="download" class="btn btn-success submit-button">Descarrega el ticket</button>
     </div>
+
 </body>
+
+<footer>
+
+</footer>
 
 </html>
