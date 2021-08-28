@@ -394,6 +394,7 @@ def reservar_butaca(request, id):
 def formulari_pagament(request):
     # agafem el valor de la butaca seleccionada
     butaca = request.session['butaca']
+    butaca = int(butaca) - 48
     productes = Producte.objects.all()
 
     # L' String és el nom de la variable que haig d'usar a la template
@@ -410,33 +411,6 @@ def updateItem(request):
     return JsonResponse('item was added', safe=False)
 
 
-
-@login_required(login_url='/login/')
-# Funció per actualitzar el perfil de l'usuari
-def edit_perfil(request):
-    usuari = request.user
-    form = UserForm(instance=usuari)
-
-    if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES, instance=usuari)
-
-        if form.is_valid():
-            form.save()
-            # context['form'] = form
-
-            return redirect(to="cartellera")
-
-            # messages.success(request, "El producte s'ha modificat correctament")
-
-        else:
-            print(form.errors)
-
-    # L' String és el nom de la variable que haig d'usar a la template
-    context = {
-        'form': form
-    }
-
-    return render(request, "editar_perfil.html", context)
 
 
 ##

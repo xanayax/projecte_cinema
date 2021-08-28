@@ -1,6 +1,6 @@
 <!--
     Pàgina per "pagar" després de reservar una butaca.
-    És només una pàgina estàtica per representar el pas que vindria després de triar butaca
+    A més, ara es poden afegir productes del menú a la comanda i descarregar el ticket
 -->
 
 {% load static %}
@@ -23,6 +23,7 @@
 
 <body>
 
+    <!-- Mostrem tots els productes en una barra lateral a la dreta -->
     <div class="w3-sidebar w3-bar-block" style="width:25%;right:0;padding-bottom:20%">
         <h3 class="w3-bar-item">Menu</h3>
         {% for producte in productes %}
