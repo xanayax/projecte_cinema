@@ -1,6 +1,6 @@
 // Descarregar el ticket
 $('#download').click(function () {
-    const resum = document.getElementById("resum");
+    const resum = $('resum')
     console.log(resum);
     html2pdf(resum);
 });

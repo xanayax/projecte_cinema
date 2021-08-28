@@ -144,7 +144,7 @@ CSRF_COOKIE_SECURE = False
 EMAIL_FROM_USER = 'Administrador'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sapaxavi5@gmail.com'
-EMAIL_HOST_PASSWORD = 'X3MiGCRVD2d4vy6'
+EMAIL_HOST_PASSWORD = 'P@ssw0rd!-'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 
