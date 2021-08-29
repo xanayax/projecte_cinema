@@ -394,7 +394,10 @@ def reservar_butaca(request, id):
 def formulari_pagament(request):
     # agafem el valor de la butaca seleccionada
     butaca = request.session['butaca']
-    butaca = int(butaca) - 48
+
+    if int(butaca) > 47:
+        butaca = int(butaca) - 48
+
     productes = Producte.objects.all()
 
     # L' String és el nom de la variable que haig d'usar a la template
