@@ -83,10 +83,12 @@
                     <label for="preu-total">Preu</label>
                     <input id="preu-total" class="null card-image form-control col-md-6" type="text" value="6.00€" disabled step=".01">
                 </div>
+{#                {% for butaca in butaques %}#}
                 <div class="form-group">
                     <label for="numSeient">Número de seient</label>
                     <input class="null card-image form-control col-md-6" type="text" value="{{ butaca }}" disabled>
                 </div>
+{#                {% endfor %}#}
             </form>
         </div>
        <button id="download" class="btn btn-success submit-button">Descarrega el ticket</button>

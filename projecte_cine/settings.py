@@ -26,7 +26,7 @@ SECRET_KEY = 'd^xla98wopzsnjwhro74tw4hj*^wk1%jnc-!aqd#_e=r#=k1*m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'projecte_cine.urls'
@@ -134,6 +135,8 @@ STATIC_URL = 'Apps/gestio_cine/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,  'static')
 
 # ruta de les imatges
+# MEDIA_URL = 'Apps/gestio_cine/static/img/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'poster_img')
 MEDIA_URL = '/poster_img/'
 MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/img/poster_img')
 

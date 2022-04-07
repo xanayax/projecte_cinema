@@ -7,6 +7,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.db import connection
+from django.template import RequestContext
+from django.shortcuts import render
+
 from .forms import MovieForm, ProductForm, SessionForm, CommentForm, UserForm
 from .models import *
 from django.contrib.auth import get_user_model
@@ -34,6 +37,17 @@ def superuser_only(function):
         return function(request, *args, **kwargs)
 
     return _inner
+
+
+
+# redirigir a una pàgina si hi ha error 404
+def handler404(request, *args, **argv):
+    response = render('403.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
 
 
 # activar el compte de l'usuari
@@ -319,7 +333,7 @@ def movie_details(request, id):
 def seleccio_butaca(request, id):
     sessio = Sessio.objects.get(id_sessio=id)
 
-    # funció per agafar totes les butaques
+    # agafar totes les butaques
     butaca = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
                                   " FROM gestio_cine_sala sal"
                                   " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
@@ -328,16 +342,7 @@ def seleccio_butaca(request, id):
                                   " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
                                   " WHERE ses.id_sessio = " + id)
 
-    # funció per agafar totes les butaques ocupades
-    # butaques_ocupades = Pelicula.objects.raw("SELECT b.*, sal.*, ses.*, f.*, p.*"
-    #                                          " FROM gestio_cine_sala sal"
-    #                                          " INNER JOIN gestio_cine_sessio ses ON sal.id_sala = ses.id_sala_id"
-    #                                          " INNER JOIN gestio_cine_fila f ON sal.id_sala = f.id_sala_id"
-    #                                          " INNER JOIN gestio_cine_butaca b ON f.id_fila = b.id_fila_id"
-    #                                          " INNER JOIN gestio_cine_pelicula p ON ses.id_pelicula_id = p.id_pelicula"
-    #                                          " INNER JOIN gestio_cine_butaca_reserves br ON b.id_butaca = br.id_butaca_id"
-    #                                          " WHERE ses.id_sessio = " + id)
-
+    # agafar totes les butaques ocupades
     butaques_ocupades = Pelicula.objects.raw("SELECT br.*, b.*, p.id_pelicula "
                                              " FROM gestio_cine_butaca_reserves br"
                                              " INNER JOIN gestio_cine_butaca b ON br.id_butaca_id = b.id_butaca"
@@ -362,11 +367,17 @@ def seleccio_butaca(request, id):
 def reservar_butaca(request, id):
     if request.method == 'POST':
         sessio = Sessio.objects.get(id_sessio=id)
-        butaca = request.POST['butaca']
+
+        # () en comptes de []
+        butaques = request.POST.getlist('butaca[]')
+        print(butaques)
+
 
         # guardem el valor de la butaca seleccionada
-        request.session['butaca'] = butaca
-        print(butaca, sessio)
+        request.session['butaca'] = butaques
+        #request.session['butaca'][0] = str(butaca)
+        #request.session['butaca'][1] = str(butaca)
+        #print(butaques, sessio)
 
         # fer l'insert a la taula reserves
         add_reserva = Reserva.objects.create(id_sessio=sessio)
@@ -376,7 +387,7 @@ def reservar_butaca(request, id):
         id_reserva_taula_butaca_reserves = add_reserva.id_reserva
 
         # agafem l'id de la butaca
-        butaca_per_reservar = Butaca.objects.get(id_butaca=butaca)
+        butaca_per_reservar = Butaca.objects.get(id_butaca=butaques)
 
         # agafem l'id de reserves
         reserva_per_reservar = Reserva.objects.get(id_reserva=id_reserva_taula_butaca_reserves)

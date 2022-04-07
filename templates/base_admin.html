@@ -79,7 +79,6 @@
         </div>
         {#      Si l'usuari ha iniciat sessió, mostrem el seu nom d'usuari i l'enllaç per tancar la sessió#}
         {% if request.user.is_authenticated %}
-            <span class="material-icons">account_circle</span>
             <span class="nav-link">Hola, {{ request.user.username }}</span>
             <span id="logout"><a href="{% url 'logout' %}">Tancar Sessió</a></span>
         {% endif %}
