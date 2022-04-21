@@ -177,7 +177,6 @@ class Sessio(models.Model):
 class Reserva(models.Model):
 
     id_reserva = models.AutoField(primary_key=True)
-    #id_client = models.ForeignKey(Client, null=False, blank=False, on_delete=models.CASCADE)
     id_sessio = models.ForeignKey(Sessio, null=False, blank=False, on_delete=models.CASCADE)
 
     def __str__(self):

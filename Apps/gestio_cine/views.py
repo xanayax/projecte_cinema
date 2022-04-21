@@ -368,18 +368,10 @@ def reservar_butaca(request, id):
     if request.method == 'POST':
         sessio = Sessio.objects.get(id_sessio=id)
 
-        # () en comptes de []
         butaques = request.POST.getlist('butaca[]')
-        #for x in butaques:
-        #    butaques = int(butaques[x])
-        #butaques = int(butaques[0])
-        #butaques = int(butaques[1])
         print(butaques)
 
-
         # guardem el valor de la butaca seleccionada
-        #request.session['butaca'] = butaques
-        #print(butaques, sessio)
 
         # fer l'insert a la taula reserves
         add_reserva = Reserva.objects.create(id_sessio=sessio)
@@ -393,22 +385,11 @@ def reservar_butaca(request, id):
         butaques_per_reservar = [int(i) for i in butaques]
         print(butaques_per_reservar)
 
-        #for i in butaques:
-
-        # #butaques_per_reservar = []
-        # for i in butaques_per_reservar:
-        #     print(i)
-        #     resultats = Butaca.objects.get(id_butaca=i)
-        #     print(i)
-        #     #print(resultats[i])
-        #butaques_per_reservar = Butaca.objects.get(id_butaca=butaques)
-
 
         # agafem l'id de reserves
         reserva_per_reservar = Reserva.objects.get(id_reserva=id_reserva_taula_butaca_reserves)
 
         # fem l'insert a la taula butaca_reserves amb les ids obtingudes
-        #llargada_array = len(butaques_per_reservar)
         for butaca_a_reservar in butaques_per_reservar:
             print(butaca_a_reservar)
             butaca = Butaca()
@@ -416,7 +397,7 @@ def reservar_butaca(request, id):
             add_butaca_reserves = Butaca_Reserves.objects.create(id_butaca=butaca,
                                                                  id_reserva=reserva_per_reservar,
                                                                  id_sessio=sessio)
-        add_butaca_reserves.save(force_insert=True)
+        add_butaca_reserves.save()
 
         return redirect(to='/formulari_pagament')
 
