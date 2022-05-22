@@ -368,10 +368,13 @@ def reservar_butaca(request, id):
     if request.method == 'POST':
         sessio = Sessio.objects.get(id_sessio=id)
 
+        # agafo l'array de butaques
         butaques = request.POST.getlist('butaca[]')
         print(butaques)
 
         # guardem el valor de la butaca seleccionada
+        request.session['butaca'] = butaques
+        print(butaques, sessio)
 
         # fer l'insert a la taula reserves
         add_reserva = Reserva.objects.create(id_sessio=sessio)
@@ -380,16 +383,15 @@ def reservar_butaca(request, id):
         # agafem l'id del registre que acabem d'insertar
         id_reserva_taula_butaca_reserves = add_reserva.id_reserva
 
-        # agafem l'id de la butaca
-        # detectar si és una llista i fer un bucle
+        # passo tots els elements a int
         butaques_per_reservar = [int(i) for i in butaques]
         print(butaques_per_reservar)
-
 
         # agafem l'id de reserves
         reserva_per_reservar = Reserva.objects.get(id_reserva=id_reserva_taula_butaca_reserves)
 
-        # fem l'insert a la taula butaca_reserves amb les ids obtingudes
+        # fem l'insert a la taula butaca_reserves amb les ids obtingudes amb un for,
+        # insanciant un objecte butaca per cada
         for butaca_a_reservar in butaques_per_reservar:
             print(butaca_a_reservar)
             butaca = Butaca()
@@ -404,18 +406,29 @@ def reservar_butaca(request, id):
 
 # Pàgina pagament
 def formulari_pagament(request):
+
     # agafem el valor de la butaca seleccionada
-    butaca = request.session['butaca']
+    butaques = request.session['butaca']
+    print(butaques)
 
-    if int(butaca) > 47:
-        butaca = int(butaca) - 48
+    for butaca in butaques:
+        if int(butaca) > 47:
+            int(butaca) - 48
 
+    # posem que el preu inicialment sigui 6
+    preu = 6
+    length_array = len(butaques)
+    print(length_array)
+
+    # multiplico el preu per la quantitat de butaques que hi ha
+    preu = preu * length_array
     productes = Producte.objects.all()
 
     # L' String és el nom de la variable que haig d'usar a la template
     context = {
-        'butaca': butaca,
-        'productes': productes
+        'butaca': butaques,
+        'productes': productes,
+        'preu': preu
     }
 
     return render(request, "formulari_pagament.html", context)
