@@ -411,9 +411,17 @@ def formulari_pagament(request):
     butaques = request.session['butaca']
     print(butaques)
 
+    # creo un array nou per afegir les butaques
+    array_nou = []
+
     for butaca in butaques:
         if int(butaca) > 47:
-            int(butaca) - 48
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 48
+            array_nou.append(b)
 
     # posem que el preu inicialment sigui 6
     preu = 6
@@ -425,8 +433,9 @@ def formulari_pagament(request):
     productes = Producte.objects.all()
 
     # L' String és el nom de la variable que haig d'usar a la template
+    # passo per paràmetre l'array nou
     context = {
-        'butaca': butaques,
+        'butaca': array_nou,
         'productes': productes,
         'preu': preu
     }
