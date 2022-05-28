@@ -10,6 +10,8 @@ botocore==1.26.10
 certifi==2020.12.5
 chardet==3.0.4
 colorama==0.4.4
+discord==1.0.1
+discord.py==1.6.0
 distlib==0.3.4
 dj-database-url==0.5.0
 Django==3.2.2
@@ -30,7 +32,7 @@ MarkupSafe==1.1.1
 multidict==5.1.0
 mysql==0.0.2
 mysql-connector-python==8.0.23
-mysqlclient==2.0.3
+mysqlclient @ file:///C:/Users/Xavier%20Anaya%20Xaubet/PycharmProjects/projecte_cine/mysqlclient-1.4.6-cp39-cp39-win_amd64.whl
 packaging==20.9
 pdoc==7.0.3
 pdoc3==0.9.2
@@ -41,6 +43,9 @@ psycopg2==2.8.6
 Pygments==2.8.1
 PyMySQL==1.0.2
 pyparsing==2.4.7
+PyQt5==5.15.4
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.8.1
 python-dateutil==2.8.2
 python-decouple==3.4
 python-dotenv==0.15.0
