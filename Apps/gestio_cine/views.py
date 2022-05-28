@@ -415,12 +415,60 @@ def formulari_pagament(request):
     array_nou = []
 
     for butaca in butaques:
-        if int(butaca) > 47:
+        if int(butaca) > 47 and int(butaca) < 112:
             print(butaques)
 
             # resto 48 per obtenir el número de seient real i
             # l'afegeixo al nou array
             b = int(butaca) - 48
+            array_nou.append(b)
+
+        elif int(butaca) > 111 and int(butaca) < 160:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 111
+            array_nou.append(b)
+
+        elif int(butaca) > 159 and int(butaca) < 208:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 159
+            array_nou.append(b)
+
+        elif int(butaca) > 207 and int(butaca) < 256:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 207
+            array_nou.append(b)
+
+        elif int(butaca) > 303 and int(butaca) < 352:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 303
+            array_nou.append(b)
+
+        elif int(butaca) > 351 and int(butaca) < 400:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 351
+            array_nou.append(b)
+
+        elif int(butaca) > 399 and int(butaca) < 448:
+            print(butaques)
+
+            # resto 48 per obtenir el número de seient real i
+            # l'afegeixo al nou array
+            b = int(butaca) - 399
             array_nou.append(b)
 
     # posem que el preu inicialment sigui 6
