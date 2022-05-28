@@ -46,7 +46,7 @@ pyparsing==2.4.7
 PyQt5==5.15.4
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.8.1
-python-dateutil==1.5
+python-dateutil==2.1
 python-decouple==3.4
 python-dotenv==0.15.0
 pytz==2020.5
