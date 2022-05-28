@@ -30,7 +30,7 @@ Mako==1.1.4
 Markdown==3.3.4
 MarkupSafe==1.1.1
 multidict==5.1.0
-mysql==0.0.2
+mysql==0.0.3
 mysql-connector-python==8.0.23
 mysqlclient==2.0.3
 packaging==20.9
