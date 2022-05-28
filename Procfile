@@ -1,2 +1,2 @@
-web: gunicorn projecte-cine.wsgi --log-file -
+web: gunicorn projecte-cine.wsgi:application --log-file -
 python manage.py collectstatic
