@@ -131,8 +131,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = 'Apps/gestio_cine/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,  'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/static')
 
 # ruta de les imatges
 # MEDIA_URL = 'Apps/gestio_cine/static/img/'
