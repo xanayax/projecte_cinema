@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'projecte_cine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cinema_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'heroku_2a16239a9b3a439',
+        'USER': 'b4786f5c8d9bcf',
+        'PASSWORD': 'c74ab667',
+        'HOST': 'eu-cdbr-west-02.cleardb.net',
         'PORT': '3306',
         'OPTIONS': {
             'sql_mode': 'traditional',
