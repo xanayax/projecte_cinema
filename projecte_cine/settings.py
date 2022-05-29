@@ -26,7 +26,7 @@ SECRET_KEY = 'd^xla98wopzsnjwhro74tw4hj*^wk1%jnc-!aqd#_e=r#=k1*m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://django-cinema.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
