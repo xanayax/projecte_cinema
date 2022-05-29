@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath projecte_cine projecte-cine.wsgi --log-file -
+web: gunicorn projecte_cine.projecte-cine.wsgi --log-file -
