@@ -151,7 +151,7 @@ STATICFILES_DIRS = (
 # MEDIA_URL = 'Apps/gestio_cine/static/img/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'poster_img')
 MEDIA_URL = '/poster_img/'
-MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/img/poster_img')
+MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/img')
 
 CSRF_COOKIE_SECURE = False
 
