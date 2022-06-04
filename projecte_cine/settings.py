@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 from django.contrib.messages import constants as message_constants
+import cloudinary
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Apps.gestio_cine',
     'crispy_forms',
-    'django_filters'
+    'django_filters',
+    # Media Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -147,11 +152,21 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# Cloudinary stuff
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dt4cqerwe',
+    'API_KEY': '592174861681251',
+    'API_SECRET': 'AXZzJqMVhjmFXzVjdJ8FMAV1_D8',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # ruta de les imatges
 # MEDIA_URL = 'Apps/gestio_cine/static/img/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'poster_img')
-MEDIA_URL = '/poster_img/'
-MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/poster_img')
+
+#MEDIA_URL = '/poster_img/'
+#MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/poster_img')
 
 CSRF_COOKIE_SECURE = False
 
