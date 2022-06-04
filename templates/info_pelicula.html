@@ -31,7 +31,7 @@
 {#                    Mostrem les sessions per cada pel·lícula #}
                         {% for sess in sessio %}
                             <a href="{% url 'seleccio_butaques' sess.id_sessio %}" class="btn btn-danger"
-                               role="button">{{ sess.hora }}</a>
+                               role="button">{{ sess.data }} <br> {{ sess.hora }}</a><br><br>
                         {% endfor %}
                     </div>
 

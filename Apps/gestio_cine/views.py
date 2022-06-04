@@ -39,14 +39,14 @@ def superuser_only(function):
     return _inner
 
 
-
-# redirigir a una pàgina si hi ha error 404
-def handler404(request, *args, **argv):
+'''
+# redirigir a una pàgina si hi ha error 403
+def handler403(request, *args, **argv):
     response = render('403.html', {},
                                   context_instance=RequestContext(request))
-    response.status_code = 404
+    response.status_code = 403
     return response
-
+'''
 
 
 
@@ -234,12 +234,16 @@ def all_movies(request):
 def all_movies_admin(request):
     pelicules = Pelicula.objects.all()
 
-    # L' String és el nom de la variable que haig d'usar a la template
-    context = {
-        'pelicules': pelicules
-    }
+    if not request.user.is_staff:
+        raise PermissionDenied
 
-    return render(request, "llistat_pelis_admin.html", context)
+    else:
+        # L' String és el nom de la variable que haig d'usar a la template
+        context = {
+            'pelicules': pelicules
+        }
+
+        return render(request, "llistat_pelis_admin.html", context)
 
 
 # Funció per afegir una pel·lícula
