@@ -165,7 +165,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # MEDIA_URL = 'Apps/gestio_cine/static/img/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'poster_img')
 
-#MEDIA_URL = '/poster_img/'
+MEDIA_URL = '/django-cinema/'
 #MEDIA_ROOT = os.path.join(BASE_DIR,  'Apps/gestio_cine/static/poster_img')
 
 CSRF_COOKIE_SECURE = False
